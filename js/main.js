@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initPortfolioFilter();
     initTestimonialSlider();
     initContactForm();
-    initHeroParticles();
-    
+    // initHeroParticles(); // SVG 배경으로 대체됨
+
     console.log('%c🚀 백록마케팅', 'font-size: 20px; font-weight: bold; color: #51B498;');
 });
 
