@@ -1,0 +1,1179 @@
+/* ========================================
+   백록마케팅 - Complete Styles
+   All animations and interactions included
+   ======================================== */
+
+/* ========== TOP NAV GAP FIX ========== */
+
+/* 1) 브라우저 기본 여백 제거 */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+:root {
+    /* 백록마케팅 브랜드 컬러 팔레트 */
+    --accent: #51B498;           /* 밝은 민트 (브랜드 메인) */
+    --accent-dark: #3a9178;      /* 진한 민트 (호버) */
+    
+    /* 배경 컬러 (다크 그레이 기반 - 민트와 조화) */
+    --bg: #1a1d23;               /* 메인 배경 (차콜 그레이) */
+    --bg-alt: #22262e;           /* 섹션 배경 (약간 밝은 그레이) */
+    --card: #2a2f38;             /* 카드 배경 */
+    --border: #3a3f4a;           /* 테두리 */
+    
+    /* 텍스트 컬러 */
+    --text: #e8ecef;             /* 밝은 그레이 (메인 텍스트) */
+    --muted: #a0a8b0;            /* 중간 그레이 (보조 텍스트) */
+    
+    /* 버튼 텍스트 */
+    --on-accent: #0D2226;        /* 민트 위의 어두운 텍스트 */
+    
+    /* Legacy 호환성 */
+    --brand: #51B498;
+    --brand-light: #51B498;
+    
+    /* 헤더 높이 변수 (필요하면 56~72 사이로만 조정) */
+    --nav-h: 64px;
+    
+    /* DATA SNAPSHOT 섹션 전용 변수 */
+    --bk-accent: #03B5AA;        /* 포인트 */
+    --bk-text: #E5E5E5;          /* 본문 */
+    --bk-muted: #6C7A89;         /* 보조텍스트 */
+    --bk-bg: #101214;            /* 섹션 배경 */
+    --bk-panel: #171A1D;         /* 슬라이더 패널 */
+    --bk-border: rgba(229,229,229,.12);
+    --bk-duration: 27s;          /* 6장 기준 자동재생 총 시간(=4.5s*6) */
+    
+    /* Section Heading System (Data Snapshot 통일) */
+    --sec-eyebrow-size: 12px;
+    --sec-eyebrow-tracking: .18em;
+    --sec-title-size: 32px;          /* 데스크탑 H2 통일 */
+    --sec-title-size-md: 26px;       /* 태블릿 */
+    --sec-title-size-sm: 22px;       /* 모바일 */
+    --sec-title-line: 1.25;
+    --sec-sub-size: 14px;
+    --sec-sub-line: 1.7;
+    --sec-head-gap: 18px;
+}
+
+* {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* 커스텀 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F4F4F4;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #90AB8B;
+    border-radius: 6px;
+    border: 2px solid #F4F4F4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7A9577;
+}
+
+/* Firefox 스크롤바 */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #90AB8B #F4F4F4;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* 3) "상단 메뉴/헤더"를 무조건 위에 딱 붙게 + 떠보이지 않게 */
+body > header,
+header,
+.navbar,
+.topbar,
+.site-header {
+    position: sticky !important;
+    top: 46px !important;  /* 띠 배너 높이만큼 아래로 */
+    z-index: 9998 !important;  /* 띠 배너보다 낮게 */
+
+    /* 새로운 색상 시스템 적용 */
+    background: rgba(14, 17, 20, 0.95) !important; /* --bk-bg 기반 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-bottom: 1px solid rgba(0, 183, 181, 0.15) !important; /* --bk-accent 기반 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+
+    /* 상단 빈 공간 원인 제거 */
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* DATA SNAPSHOT 섹션의 header는 sticky 제외 */
+#data-snapshot header.bk-head {
+    position: static !important;
+}
+
+/* CONTACT 섹션의 header는 sticky 제외 */
+#contact header,
+.bk-subscribe header,
+.bk-subscribe__head {
+    position: static !important;
+}
+
+/* 4) 메뉴 영역 자체가 위아래로 과하게 띄워져 있으면 정리 */
+body > header *,
+header * {
+    margin-top: 0 !important;
+}
+
+/* 5) 첫 섹션이 메뉴 아래로 과하게 내려가는 현상(빈 공간) 줄이기 */
+main,
+#main,
+.page,
+.wrapper,
+.container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* 6) 첫 화면(히어로/첫 섹션)의 상단 여백만 최소로 */
+main > section:first-of-type,
+section:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 28px !important; /* 너무 답답하면 36~44로 */
+}
+
+/* 7) 메뉴 앵커 이동 시 헤더에 가려지는 문제 방지 */
+section[id] {
+    scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+
+/* ======================================== 
+   Color Classes
+   ======================================== */
+.gradient-text {
+    color: var(--accent) !important;
+}
+
+.gradient-bg {
+    background: var(--accent) !important;
+    color: var(--on-accent) !important;
+}
+
+.gradient-bg:hover {
+    filter: brightness(1.06);
+}
+
+.dark-bg {
+    background: var(--bg) !important;
+}
+
+.dark-bg-alt {
+    background: var(--bg-alt) !important;
+}
+
+.dark-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.text-muted {
+    color: var(--muted) !important;
+}
+
+/* ======================================== 
+   배지/칩
+   ======================================== */
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(81, 180, 152, 0.45);
+    background: rgba(81, 180, 152, 0.10);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+/* ======================================== 
+   구분선
+   ======================================== */
+.divider {
+    height: 1px;
+    background: var(--border);
+}
+
+/* ======================================== 
+   Contact 섹션 - 투명 배경
+   ======================================== */
+#contact {
+    background: transparent !important;
+    position: relative;
+}
+
+#contact .contact-wrap {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 20px;
+    padding: 32px;
+}
+
+/* CONTACT 헤더 스타일 - TEAM 섹션과 동일 */
+#contact .bk-subscribe__head {
+    text-align: center !important;
+    margin-bottom: 40px;
+}
+
+#contact .bk-subscribe__eyebrow {
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: #51B498 !important;
+    margin-bottom: 12px !important;
+}
+
+#contact .bk-subscribe__title {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+    color: #51B498 !important;
+    margin-bottom: 12px !important;
+}
+
+#contact .bk-subscribe__sub {
+    color: #9CA3AF !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+}
+
+/* 폼 카드 타이틀 - 왼쪽 정렬 및 민트색 */
+#contact .bk-subscribe__cardTitle {
+    text-align: left !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: #51B498 !important;
+    margin-bottom: 24px !important;
+}
+
+/* Contact 섹션 내 모든 텍스트 */
+#contact h2,
+#contact h3,
+#contact .gradient-text {
+    color: #e8ecef !important;
+}
+
+#contact p,
+#contact label {
+    color: #a0a8b0 !important;
+}
+
+/* Contact 섹션 내 카드 스타일 */
+#contact .dark-card {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* 입력 필드 - 흰색 배경 유지 */
+#contact input,
+#contact textarea,
+#contact select {
+    background: #FFFFFF !important;
+    border: 1.5px solid #d4d4ca !important;
+    color: #2d2d2d !important;
+}
+
+#contact input::placeholder,
+#contact textarea::placeholder {
+    color: #9a9a90 !important;
+}
+
+#contact input:focus,
+#contact textarea:focus,
+#contact select:focus {
+    outline: none;
+    border-color: #8b8b7a !important;
+    box-shadow: 0 0 0 4px rgba(139, 139, 122, 0.12) !important;
+    background: #ffffff !important;
+}
+
+/* 필수 표시 */
+#contact .text-red-500 {
+    color: #c44545 !important;
+}
+
+/* 버튼 */
+#contact .contact-btn {
+    background: linear-gradient(135deg, #6b6b5e 0%, #5a5a4e 100%) !important;
+    color: #ffffff !important;
+    font-weight: 800;
+    border: none;
+}
+
+#contact .contact-btn:hover {
+    background: linear-gradient(135deg, #5a5a4e 0%, #4a4a42 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ======================================== 
+   Rolling Banner (Marquee)
+   ======================================== */
+.rolling-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    background-color: #0502FF;
+    color: white;
+    /* ✅ 롤링배너가 상단에 있으면 margin 제거 */
+    margin: 0 !important;
+}
+
+.marquee-container {
+    position: relative;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.marquee-content {
+    display: inline-block;
+    animation: marquee 40s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ======================================== 
+   Navigation
+   ======================================== */
+/* 새로운 풀 로고 스타일 */
+.brand-logo-link {
+    display: block;
+    text-decoration: none;
+    line-height: 0; /* 여백 제거 */
+}
+
+.brand-logo-full {
+    height: 48px; /* 로고 높이 - 메뉴와 비슷하게 증가 */
+    width: auto; /* 비율 유지 */
+    display: block;
+    object-fit: contain;
+    object-position: left center; /* 왼쪽 정렬 */
+    filter: drop-shadow(0 2px 10px rgba(81, 180, 152, 0.12));
+    transition: filter 0.3s ease;
+}
+
+.brand-logo-link:hover .brand-logo-full {
+    filter: drop-shadow(0 2px 14px rgba(81, 180, 152, 0.25));
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+    .brand-logo-full {
+        height: 40px; /* 모바일에서도 충분한 크기 */
+    }
+}
+
+/* 기존 브랜드 스타일 (사용 안 함) */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+    display: block;
+    filter: drop-shadow(0 2px 10px rgba(0, 183, 181, 0.25));
+}
+
+.brand-word {
+    color: #005461;
+    font-weight: 800;
+    font-size: 1.125rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    position: relative;
+}
+
+.brand:hover .brand-word {
+    color: #003840;
+}
+
+.brand-word::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0%;
+    height: 2px;
+    background: #005461;
+    transition: width 180ms ease;
+    opacity: 0.95;
+}
+
+.brand:hover .brand-word::after {
+    width: 100%;
+}
+
+/* 모바일에서는 글자 살짝 줄이기 */
+@media (max-width: 640px) {
+    .brand-mark {
+        width: 32px;
+        height: 32px;
+    }
+    .brand-word {
+        font-size: 1rem;
+    }
+}
+
+.navbar-transparent {
+    background: transparent !important;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.navbar-transparent.scrolled {
+    background: rgba(14, 17, 20, 0.95) !important;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(0, 183, 181, 0.12);
+}
+
+.nav-link {
+    color: rgba(244, 244, 244, 0.85);
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #00B7B5;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00B7B5;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* ======================================== 
+   Hero Section
+   ======================================== */
+.hero-section {
+    min-height: 93vh;
+    display: flex;
+    align-items: center;
+    padding-top: 200px;  /* 띠 배너(46px) + 네비(74px) + 여유(80px) */
+    padding-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ HERO 배경 제거 (캔버스로 대체) */
+#home {
+    margin-top: 0 !important;
+    /* padding-top 제거하여 hero-section의 padding-top이 적용되도록 함 */
+}
+
+/* 기존 배경 효과 제거 */
+#home::before,
+#home::after {
+    content: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+}
+
+/* ======================================== 
+   Sections
+   ======================================== */
+.section-padding {
+    padding: 100px 0;
+}
+
+/* ======================================== 
+   Animations - Fade In Up
+   ======================================== */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Staggered animation delays */
+.fade-in-up:nth-child(1) { animation-delay: 0s; }
+.fade-in-up:nth-child(2) { animation-delay: 0.1s; }
+.fade-in-up:nth-child(3) { animation-delay: 0.2s; }
+.fade-in-up:nth-child(4) { animation-delay: 0.3s; }
+.fade-in-up:nth-child(5) { animation-delay: 0.4s; }
+
+/* Scroll-triggered animations */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.scroll-animate.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ======================================== 
+   Hover Effects
+   ======================================== */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(84, 181, 151, 0.2);
+}
+
+/* ======================================== 
+   Filter Buttons
+   ======================================== */
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid rgba(232, 245, 241, 0.2);
+    border-radius: 50px;
+    color: #e8f5f1;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    border-color: var(--brand-light);
+    color: var(--brand-light);
+}
+
+.filter-btn.active {
+    background: #54B597 !important;
+    border-color: #54B597 !important;
+    color: #0d1f1c !important;
+}
+
+/* ======================================== 
+   Portfolio Items
+   ======================================== */
+.portfolio-item {
+    transition: all 0.4s ease;
+}
+
+.portfolio-item.hide {
+    opacity: 0;
+    transform: scale(0.8);
+    position: absolute;
+    pointer-events: none;
+}
+
+.portfolio-item.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ======================================== 
+   Team Photo Background
+   ======================================== */
+.bg-team-photo {
+    background: linear-gradient(to bottom, rgba(13, 31, 28, 0.75), rgba(13, 31, 28, 0.90)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%231a2f2b" width="100" height="100"/></svg>');
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(100%);
+}
+
+/* ======================================== 
+   Testimonial Slider
+   ======================================== */
+#testimonialSlider {
+    transition: transform 0.7s ease-in-out;
+}
+
+.testimonial-card {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .testimonial-card {
+        width: calc(50% - 12px);
+    }
+}
+
+/* ======================================== 
+   Forms
+   ======================================== */
+input[type="text"],
+input[type="email"],
+textarea {
+    transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #DEE331 !important;
+}
+
+/* ======================================== 
+   Social Icons
+   ======================================== */
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid rgba(232, 245, 241, 0.2);
+    color: #e8f5f1;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    border-color: var(--brand-light);
+    color: var(--brand-light);
+    background: rgba(84, 181, 151, 0.1);
+    transform: translateY(-3px);
+}
+
+/* ======================================== 
+   Buttons
+   ======================================== */
+button,
+.btn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* CTA 버튼 더 눈에 띄게 (HERO 섹션) */
+#home .gradient-bg,
+#home a.btn,
+#home button {
+    box-shadow: 0 10px 30px rgba(3,181,170,.18);
+}
+
+#home .gradient-bg:hover,
+#home a.btn:hover,
+#home button:hover {
+    box-shadow: 0 12px 35px rgba(3,181,170,.25);
+}
+
+/* ======================================== 
+   Loading State
+   ======================================== */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #DEE331;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ======================================== 
+   Notification
+   ======================================== */
+.notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: #1a2f2b;
+    border: 2px solid #DEE331;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    animation: slideInRight 0.4s ease-out;
+    max-width: 400px;
+    color: #e8f5f1;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.notification-success i {
+    color: var(--brand-light);
+    font-size: 1.5rem;
+}
+
+.notification-error {
+    border-color: #ef4444;
+}
+
+.notification-error i {
+    color: #ef4444;
+    font-size: 1.5rem;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+/* ======================================== 
+   Scrollbar
+   ======================================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d1f1c;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--brand-light);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #469e7f;
+}
+
+/* ======================================== 
+   Selection
+   ======================================== */
+::selection {
+    background: var(--brand-light);
+    color: #0d1f1c;
+}
+
+::-moz-selection {
+    background: var(--brand-light);
+    color: #0d1f1c;
+}
+
+/* ======================================== 
+   Responsive Design
+   ======================================== */
+@media (max-width: 768px) {
+    body {
+        padding-top: 48px;
+    }
+    
+    .section-padding {
+        padding: 60px 0;
+    }
+    
+    .hero-section {
+        min-height: 75vh;
+        padding-top: 100px;
+        padding-bottom: 80px;
+    }
+    
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: calc(100% - 20px);
+    }
+    
+    .marquee-content {
+        animation: marquee 30s linear infinite;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding-top: 80px;
+    }
+    
+    h1 {
+        font-size: 2rem !important;
+    }
+    
+    h2 {
+        font-size: 1.75rem !important;
+    }
+}
+
+/* ======================================== 
+   Utility Classes
+   ======================================== */
+.aspect-square {
+    aspect-ratio: 1 / 1;
+}
+
+.aspect-video {
+    aspect-ratio: 16 / 9;
+}
+
+.text-balance {
+    text-wrap: balance;
+}
+
+/* ✅ 모바일에서 navbar 높이가 달라 보이면 조정 */
+@media (max-width: 767px) {
+    :root { 
+        --nav-h: 68px; 
+    }
+}
+
+/* ======================================== 
+   Print Styles
+   ======================================== */
+@media print {
+    .rolling-banner,
+    nav,
+    footer {
+        display: none;
+    }
+}
+
+/* ======================================== 
+   DATA SNAPSHOT Section
+   ======================================== */
+/* ✅ DATA SNAPSHOT 헤더를 다른 섹션 헤더처럼 정렬/규격 통일 */
+#data-snapshot .bk-head {
+    margin-bottom: var(--sec-head-gap) !important;
+    text-align: center !important;       /* ✅ 중앙 정렬 */
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgba(255,255,255,0.95);
+    padding: 32px 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+/* 상단 라벨(eyebrow) 통일 */
+#data-snapshot .bk-eyebrow {
+    font-size: 1.25rem !important;       /* ✅ text-xl (20px) - CLIENTS와 동일 */
+    letter-spacing: var(--sec-eyebrow-tracking) !important;
+    text-transform: uppercase !important;
+    color: var(--accent) !important;     /* ✅ 브랜드 민트색 */
+    margin: 0 0 10px 0 !important;
+    font-weight: 700 !important;
+}
+
+/* 태블릿/데스크탑: 더 크게 */
+@media (min-width: 768px) {
+    #data-snapshot .bk-eyebrow {
+        font-size: 1.5rem !important;    /* ✅ text-2xl (24px) - CLIENTS와 동일 */
+    }
+}
+
+/* 제목(H2) 통일 */
+#data-snapshot .bk-title {
+    font-size: var(--sec-title-size) !important;
+    line-height: var(--sec-title-line) !important;
+    margin: 0 0 10px 0 !important;
+    font-weight: 800 !important;
+    color: var(--text) !important;       /* ✅ 밝은 회색 */
+    quotes: """ """ "'" "'";
+}
+
+/* 서브 설명 통일 */
+#data-snapshot .bk-sub {
+    font-size: var(--sec-sub-size) !important;
+    line-height: var(--sec-sub-line) !important;
+    margin: 0 auto !important;           /* ✅ 중앙 정렬 */
+    color: #005461 !important;           /* ✅ 브랜드 색상 */
+    max-width: 880px !important;
+    font-weight: 500 !important;         /* ✅ 중간 굵기 */
+}
+
+/* 강조색(익명화) - 동일한 브랜드 색상 */
+#data-snapshot .bk-accent {
+    color: #005461 !important;           /* ✅ 브랜드 색상 */
+    font-weight: 700 !important;         /* ✅ 굵게 */
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+    #data-snapshot .bk-title {
+        font-size: var(--sec-title-size-md) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    #data-snapshot .bk-title {
+        font-size: var(--sec-title-size-sm) !important;
+    }
+    
+    #data-snapshot .bk-head {
+        text-align: center !important;   /* ✅ 모바일도 중앙 정렬 */
+    }
+}
+
+/* Layout */
+.bk-section {
+    background: transparent;
+    color: #005461;
+    padding: 72px 0;
+}
+
+.bk-wrap {
+    width: min(1080px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.bk-head {
+    margin-bottom: 22px;
+}
+
+.bk-eyebrow {
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: #005461;
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.bk-title {
+    font-size: 28px;
+    line-height: 1.25;
+    margin: 0 0 10px 0;
+    color: #005461;
+    font-weight: 800;
+}
+
+.bk-sub {
+    margin: 0;
+    color: #005461;
+    line-height: 1.6;
+    max-width: 880px;
+    font-weight: 500;
+}
+
+.bk-accent {
+    color: #005461;
+    font-weight: 700;
+}
+
+/* Slider (CSS-only autoplay) */
+.bk-slider {
+    border: 1px solid #E0E0E0;
+    background: #FFFFFF;
+    border-radius: 18px;
+    overflow: hidden;
+    /* ✅ 슬라이더 카드(틀) 폭 줄이기 */
+    max-width: 860px;   /* 780~920 사이로 취향 조절 */
+    margin: 0 auto;     /* 중앙 정렬 */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.bk-viewport {
+    overflow: hidden;
+    background: #FFFFFF;
+}
+
+/* 6장 고정: track 폭 600% */
+.bk-track {
+    display: flex;
+    width: 600%;
+    will-change: transform;
+}
+
+/* 각 슬라이드는 뷰포트 100% */
+.bk-slide {
+    width: calc(100% / 6);
+    margin: 0;
+    /* ✅ 이미지가 "잘리지 않고" 틀 안에 전부 들어오게 */
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+}
+
+.bk-slide img {
+    width: 100%;
+    /* ✅ 슬라이더 이미지 높이 제한(세로 컴팩트) */
+    height: 520px;              /* 420~560 조절 */
+    object-fit: contain;        /* ✅ 핵심: contain으로 변경 - 이미지가 잘리지 않음 */
+    object-position: center;
+    display: block;
+    background: #FFFFFF;        /* ✅ 남는 여백(레터박스) 배경 - 흰색 */
+}
+
+/* 캡션 */
+.bk-slide figcaption {
+    padding: 14px 16px;
+    border-top: 1px solid #E0E0E0;
+    color: #005461;
+    font-size: 13px;
+    background: #F9F9F9;
+    /* 캡션은 그대로 아래 */
+    margin-top: auto;
+    font-weight: 600;
+}
+
+/* 자동재생: hover 시 일시정지 */
+.bk-autoplay .bk-track {
+    animation: bkCarousel6 var(--bk-duration) infinite;
+}
+
+.bk-autoplay:hover .bk-track {
+    animation-play-state: paused;
+}
+
+.bk-hint {
+    padding: 10px 14px;
+    border-top: 1px solid #E0E0E0;
+    color: #005461;
+    font-size: 12px;
+    background: #F9F9F9;
+    font-weight: 600;
+}
+
+/* 6장 캐러셀 키프레임 (각 슬라이드 "머무름" 위주) */
+@keyframes bkCarousel6 {
+    /* Slide 1 */
+    0%      { transform: translateX(0%); }
+    14%     { transform: translateX(0%); }
+    16.666% { transform: translateX(-16.666%); }
+
+    /* Slide 2 */
+    30.666% { transform: translateX(-16.666%); }
+    33.333% { transform: translateX(-33.333%); }
+
+    /* Slide 3 */
+    47.333% { transform: translateX(-33.333%); }
+    50%     { transform: translateX(-50%); }
+
+    /* Slide 4 */
+    64%     { transform: translateX(-50%); }
+    66.666% { transform: translateX(-66.666%); }
+
+    /* Slide 5 */
+    80.666% { transform: translateX(-66.666%); }
+    83.333% { transform: translateX(-83.333%); }
+
+    /* Slide 6 */
+    97.333% { transform: translateX(-83.333%); }
+    100%    { transform: translateX(0%); }
+}
+
+/* Chips */
+.bk-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.bk-chip {
+    border: 1px solid var(--bk-border);
+    background: rgba(255,255,255,.03);
+    color: var(--bk-text);
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .bk-title {
+        font-size: 22px;
+    }
+    
+    .bk-section {
+        padding: 56px 0;
+    }
+    
+    /* ✅ 모바일: 이미지 높이 축소 */
+    .bk-slide img {
+        height: 320px;
+    }
+}
+
+/* 접근성: 모션 줄이기 설정 시 자동재생 제거 */
+@media (prefers-reduced-motion: reduce) {
+    .bk-autoplay .bk-track {
+        animation: none;
+    }
+}

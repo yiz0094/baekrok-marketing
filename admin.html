@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TV3ZB57M');</script>
+    <!-- End Google Tag Manager -->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTSYLXXCM1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XTSYLXXCM1');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의 관리 - 백록마케팅</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .inquiry-card {
+            transition: all 0.3s ease;
+        }
+        
+        .inquiry-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-primary {
+            background: #51B498;
+            color: white;
+        }
+        
+        .badge-secondary {
+            background: #6B7280;
+            color: white;
+        }
+        
+        .badge-info {
+            background: #3B82F6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TV3ZB57M"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">
+                            <i class="fas fa-envelope-open-text text-teal-600 mr-2"></i>
+                            문의 관리
+                        </h1>
+                        <p class="text-sm text-gray-500 mt-1">접수된 구독 문의를 관리합니다</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="refreshData()" class="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">
+                            <i class="fas fa-sync-alt mr-2"></i>새로고침
+                        </button>
+                        <button onclick="exportToCSV()" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
+                            <i class="fas fa-download mr-2"></i>CSV 다운로드
+                        </button>
+                        <a href="index.html" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+                            <i class="fas fa-home mr-2"></i>홈으로
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 font-medium">전체 문의</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" id="totalCount">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-envelope text-teal-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 font-medium">신규 구독 문의</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" id="newSubscribeCount">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-plus-circle text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 font-medium">서비스 상담</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" id="consultCount">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-comments text-purple-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 font-medium">기타 문의</p>
+                            <p class="text-3xl font-bold text-gray-900 mt-2" id="etcCount">0</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-question-circle text-gray-600 text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border border-gray-200">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">검색</label>
+                        <input type="text" id="searchInput" placeholder="회사명, 담당자, 이메일, 연락처로 검색..." 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">문의 유형</label>
+                        <select id="typeFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option value="">전체</option>
+                            <option value="신규 구독 문의">신규 구독 문의</option>
+                            <option value="서비스 상담">서비스 상담</option>
+                            <option value="기타 문의">기타 문의</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">정렬</label>
+                        <select id="sortOrder" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <option value="desc">최신순</option>
+                            <option value="asc">오래된순</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inquiries List -->
+            <div id="inquiriesList" class="space-y-4">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="text-center py-12">
+                <i class="fas fa-spinner fa-spin text-4xl text-teal-600 mb-4"></i>
+                <p class="text-gray-600">데이터를 불러오는 중...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden text-center py-12">
+                <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-600 text-lg">아직 접수된 문의가 없습니다.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-backend.js"></script>
+    <script>
+        let allInquiries = [];
+        let filteredInquiries = [];
+
+        // 페이지 로드 시 데이터 가져오기
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInquiries();
+            
+            // 검색 및 필터 이벤트 리스너
+            document.getElementById('searchInput').addEventListener('input', filterInquiries);
+            document.getElementById('typeFilter').addEventListener('change', filterInquiries);
+            document.getElementById('sortOrder').addEventListener('change', filterInquiries);
+        });
+
+        // 문의 데이터 로드
+        async function loadInquiries() {
+            try {
+                document.getElementById('loadingState').style.display = 'block';
+                document.getElementById('inquiriesList').innerHTML = '';
+                document.getElementById('emptyState').classList.add('hidden');
+                
+                const data = await StorageBackend.getAll({ limit: 1000, sort: '-created_at' });
+
+                allInquiries = data.data || [];
+                filteredInquiries = [...allInquiries];
+                
+                document.getElementById('loadingState').style.display = 'none';
+                
+                if (allInquiries.length === 0) {
+                    document.getElementById('emptyState').classList.remove('hidden');
+                } else {
+                    updateStats();
+                    filterInquiries();
+                }
+            } catch (error) {
+                console.error('데이터 로드 실패:', error);
+                document.getElementById('loadingState').innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+                        <p class="text-gray-600">데이터를 불러오는데 실패했습니다.</p>
+                        <button onclick="loadInquiries()" class="mt-4 px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700">
+                            다시 시도
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // 통계 업데이트
+        function updateStats() {
+            document.getElementById('totalCount').textContent = allInquiries.length;
+            document.getElementById('newSubscribeCount').textContent = 
+                allInquiries.filter(i => i.inquiry_type === '신규 구독 문의').length;
+            document.getElementById('consultCount').textContent = 
+                allInquiries.filter(i => i.inquiry_type === '서비스 상담').length;
+            document.getElementById('etcCount').textContent = 
+                allInquiries.filter(i => i.inquiry_type === '기타 문의').length;
+        }
+
+        // 필터링 및 검색
+        function filterInquiries() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+            
+            // 필터링
+            filteredInquiries = allInquiries.filter(inquiry => {
+                const matchesSearch = !searchTerm || 
+                    inquiry.company_name?.toLowerCase().includes(searchTerm) ||
+                    inquiry.contact_name?.toLowerCase().includes(searchTerm) ||
+                    inquiry.email?.toLowerCase().includes(searchTerm) ||
+                    inquiry.phone?.toLowerCase().includes(searchTerm);
+                
+                const matchesType = !typeFilter || inquiry.inquiry_type === typeFilter;
+                
+                return matchesSearch && matchesType;
+            });
+            
+            // 정렬
+            filteredInquiries.sort((a, b) => {
+                const dateA = new Date(a.created_at || a.submitted_at);
+                const dateB = new Date(b.created_at || b.submitted_at);
+                return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+            });
+            
+            renderInquiries();
+        }
+
+        // 문의 목록 렌더링
+        function renderInquiries() {
+            const listContainer = document.getElementById('inquiriesList');
+            
+            if (filteredInquiries.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-xl shadow-sm border border-gray-200">
+                        <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-600">검색 결과가 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            listContainer.innerHTML = filteredInquiries.map(inquiry => {
+                const date = new Date(inquiry.created_at || inquiry.submitted_at);
+                const formattedDate = date.toLocaleString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const badgeClass = 
+                    inquiry.inquiry_type === '신규 구독 문의' ? 'badge-primary' :
+                    inquiry.inquiry_type === '서비스 상담' ? 'badge-info' :
+                    'badge-secondary';
+                
+                return `
+                    <div class="inquiry-card bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-lg font-bold text-gray-900">${inquiry.company_name || '미입력'}</h3>
+                                    <span class="badge ${badgeClass}">${inquiry.inquiry_type || '미분류'}</span>
+                                </div>
+                                <p class="text-sm text-gray-500">
+                                    <i class="far fa-clock mr-1"></i>${formattedDate}
+                                </p>
+                            </div>
+                            <button onclick="deleteInquiry('${inquiry.id}')" 
+                                    class="text-red-500 hover:text-red-700 transition ml-4"
+                                    title="삭제">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <p class="text-sm text-gray-600 mb-1">
+                                    <i class="fas fa-user mr-2"></i><strong>담당자:</strong> ${inquiry.contact_name || '미입력'}
+                                </p>
+                                <p class="text-sm text-gray-600">
+                                    <i class="fas fa-phone mr-2"></i><strong>연락처:</strong> ${inquiry.phone || '미입력'}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">
+                                    <i class="fas fa-envelope mr-2"></i><strong>이메일:</strong> ${inquiry.email || '미입력'}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-4">
+                            <p class="text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-comment-dots mr-2"></i>문의 내용
+                            </p>
+                            <p class="text-sm text-gray-600 whitespace-pre-wrap">${inquiry.message || '내용 없음'}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 새로고침
+        function refreshData() {
+            loadInquiries();
+        }
+
+        // 문의 삭제
+        async function deleteInquiry(id) {
+            if (!confirm('이 문의를 삭제하시겠습니까?')) {
+                return;
+            }
+            
+            try {
+                await StorageBackend.delete(id);
+
+                alert('문의가 삭제되었습니다.');
+                loadInquiries();
+            } catch (error) {
+                console.error('삭제 실패:', error);
+                alert('삭제에 실패했습니다.');
+            }
+        }
+
+        // CSV 내보내기
+        function exportToCSV() {
+            if (filteredInquiries.length === 0) {
+                alert('내보낼 데이터가 없습니다.');
+                return;
+            }
+            
+            // CSV 헤더
+            const headers = ['제출일시', '회사명', '담당자', '연락처', '이메일', '문의유형', '문의내용'];
+            
+            // CSV 데이터
+            const csvData = filteredInquiries.map(inquiry => {
+                const date = new Date(inquiry.created_at || inquiry.submitted_at);
+                const formattedDate = date.toLocaleString('ko-KR');
+                
+                return [
+                    formattedDate,
+                    inquiry.company_name || '',
+                    inquiry.contact_name || '',
+                    inquiry.phone || '',
+                    inquiry.email || '',
+                    inquiry.inquiry_type || '',
+                    (inquiry.message || '').replace(/"/g, '""') // 따옴표 이스케이프
+                ];
+            });
+            
+            // CSV 문자열 생성
+            const csvContent = [
+                headers.join(','),
+                ...csvData.map(row => row.map(cell => `"${cell}"`).join(','))
+            ].join('\n');
+            
+            // BOM 추가 (Excel에서 한글 깨짐 방지)
+            const BOM = '\uFEFF';
+            const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+            
+            // 다운로드
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `문의내역_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
