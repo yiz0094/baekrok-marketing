@@ -71,8 +71,26 @@
 
     /* ===== 공통 유틸 ===== */
     .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
-    .section { padding: 100px 0; }
-    .section-alt { background: #171C24; }
+    .section { padding: 100px 0; position: relative; }
+    .section-alt { background: #181E2A; }
+
+    /* 섹션 간 그라디언트 전환선 */
+    .section-alt::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 10%, rgba(81,180,152,0.12) 50%, transparent 90%);
+    }
+    .section-alt::after {
+        content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 10%, rgba(81,180,152,0.08) 50%, transparent 90%);
+    }
+
+    /* 철학+진단 섹션: 민트 틴트 배경 */
+    .section-why {
+        background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(81,180,152,0.04) 0%, transparent 60%),
+                    var(--bg-dark);
+    }
 
     .section-eyebrow {
         font-size: 13px; font-weight: 700; letter-spacing: 0.15em;
@@ -91,10 +109,10 @@
 
     /* ===== 상단 띠 배너 ===== */
     .top-banner {
-        background: linear-gradient(135deg, #1a6b5a 0%, #0d4a3e 100%);
-        color: #fff; position: fixed; top: 0; left: 0; right: 0;
+        background: linear-gradient(135deg, #FACC15 0%, #EAB308 100%);
+        color: #000000; position: fixed; top: 0; left: 0; right: 0;
         height: var(--banner-h); display: flex; align-items: center;
-        overflow: hidden; z-index: 10000; border-bottom: 1px solid rgba(81,180,152,0.3);
+        overflow: hidden; z-index: 10000; border-bottom: 1px solid rgba(250,204,21,0.4);
     }
     .banner-track {
         display: flex; animation: bannerScroll 25s linear infinite;
@@ -104,8 +122,10 @@
         display: flex; flex-shrink: 0;
     }
     .banner-item {
-        padding: 0 48px; font-size: 14px; font-weight: 600;
+        padding: 0 48px; font-size: 14px; font-weight: 900;
         display: inline-flex; align-items: center; gap: 8px;
+        letter-spacing: -0.01em;
+        text-shadow: 0 0 0 rgba(0,0,0,0.2);
     }
     @keyframes bannerScroll {
         0% { transform: translateX(0); }
@@ -117,8 +137,8 @@
     .navbar {
         position: fixed; top: var(--banner-h); left: 0; right: 0;
         height: var(--nav-h); z-index: 9999;
-        background: rgba(14,17,20,0.92); backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border);
+        background: rgba(8,12,18,0.95); backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(81,180,152,0.12);
         transition: background 0.3s;
     }
     .navbar-inner {
@@ -126,8 +146,19 @@
         height: 100%; display: flex; justify-content: space-between; align-items: center;
     }
     .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-brand img { height: 32px; }
-    .nav-brand span { font-size: 17px; font-weight: 800; color: var(--text); }
+    .nav-brand img {
+        height: 40px; width: auto;
+        filter: drop-shadow(0 0 10px rgba(81,180,152,0.3)) brightness(1.1);
+        transition: filter 0.3s;
+    }
+    .nav-brand:hover img { filter: drop-shadow(0 0 14px rgba(81,180,152,0.5)) brightness(1.2); }
+    .nav-brand span {
+        font-size: 18px; font-weight: 800;
+        background: linear-gradient(135deg, #E8ECEF 0%, var(--accent) 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+    }
     .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
     .nav-links a {
         color: var(--text-secondary); text-decoration: none; font-size: 14px;
@@ -167,23 +198,28 @@
         padding-bottom: 100px;
         text-align: center; position: relative;
         overflow: hidden;
+        background:
+            radial-gradient(ellipse 90% 60% at 50% 0%, rgba(81,180,152,0.22) 0%, transparent 55%),
+            radial-gradient(ellipse 50% 40% at 15% 70%, rgba(81,180,152,0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 40% 45% at 85% 50%, rgba(59,130,246,0.05) 0%, transparent 50%),
+            linear-gradient(180deg, #081422 0%, #0a1c24 30%, #0c2220 60%, var(--bg-dark) 100%);
     }
     /* 도트 패턴 배경 */
     .hero::before {
         content: '';
         position: absolute; inset: 0; z-index: 0;
-        background-image: radial-gradient(rgba(81,180,152,0.12) 1px, transparent 1px);
+        background-image: radial-gradient(rgba(81,180,152,0.15) 1px, transparent 1px);
         background-size: 28px 28px;
         mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 72%);
         -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 72%);
     }
-    /* 민트 글로우 */
+    /* 민트 글로우 - 강화 */
     .hero::after {
         content: '';
-        position: absolute; top: 10%; left: 50%; transform: translateX(-50%);
-        width: 700px; height: 400px; z-index: 0;
-        background: radial-gradient(ellipse at center, rgba(81,180,152,0.12) 0%, rgba(81,180,152,0.04) 40%, transparent 70%);
-        filter: blur(40px);
+        position: absolute; top: 5%; left: 50%; transform: translateX(-50%);
+        width: 900px; height: 500px; z-index: 0;
+        background: radial-gradient(ellipse at center, rgba(81,180,152,0.18) 0%, rgba(81,180,152,0.06) 40%, transparent 70%);
+        filter: blur(60px);
         pointer-events: none;
     }
     .hero .container { position: relative; z-index: 1; }
@@ -218,38 +254,77 @@
     }
     .hero-meta span { margin: 0 8px; }
 
-    /* ===== 섹션 2: 사례 ===== */
-    .cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
-    @media (max-width: 768px) { .cases-grid { grid-template-columns: 1fr; } }
+    /* 스크롤 유도 */
+    .hero-scroll-hint {
+        margin-top: 48px; display: flex; flex-direction: column;
+        align-items: center; gap: 8px; opacity: 0.5;
+        animation: scrollHintPulse 2s ease-in-out infinite;
+    }
+    .hero-scroll-hint span { font-size: 12px; color: var(--text-muted); letter-spacing: 0.1em; }
+    .hero-scroll-hint i { font-size: 16px; color: var(--accent); }
+    @keyframes scrollHintPulse {
+        0%, 100% { opacity: 0.4; transform: translateY(0); }
+        50% { opacity: 0.8; transform: translateY(6px); }
+    }
+
+    /* ===== 섹션 2: 사례 (프레임워크 중심) ===== */
+    .cases-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; max-width: 800px; margin-left: auto; margin-right: auto; }
 
     .case-card {
         background: var(--bg-card); border: 1px solid var(--border);
-        border-radius: 16px; padding: 32px; transition: all 0.3s;
+        border-radius: 16px; padding: 36px; transition: all 0.3s;
+        position: relative; overflow: hidden;
+    }
+    .case-card::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+        background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+        border-radius: 4px 0 0 4px;
     }
     .case-card:hover {
         border-color: var(--border-accent); transform: translateY(-2px);
         box-shadow: 0 8px 40px rgba(81,180,152,0.08);
     }
+    .case-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
     .case-label {
         display: inline-block; font-size: 12px; font-weight: 700;
         color: var(--accent); background: rgba(81,180,152,0.1);
-        padding: 4px 12px; border-radius: 20px; margin-bottom: 16px;
+        padding: 4px 12px; border-radius: 20px;
     }
-    .case-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 20px; }
-    .case-row { display: flex; flex-direction: column; gap: 12px; }
-    .case-item { display: flex; gap: 8px; align-items: flex-start; }
-    .case-item .tag {
-        flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 2px 8px;
-        border-radius: 4px; margin-top: 2px;
+    .case-industry {
+        font-size: 12px; color: var(--text-muted); font-weight: 500;
     }
-    .tag-problem { background: rgba(239,68,68,0.15); color: #f87171; }
-    .tag-action { background: rgba(59,130,246,0.15); color: #60a5fa; }
-    .tag-result { background: rgba(81,180,152,0.15); color: var(--accent); }
-    .case-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
-    .case-placeholder {
-        display: inline-block; background: rgba(255,255,255,0.08);
-        border: 1px dashed rgba(255,255,255,0.2); border-radius: 6px;
-        padding: 2px 12px; color: var(--text-muted); font-size: 13px;
+    .case-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 24px; color: var(--text); }
+
+    .case-flow {
+        display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items: stretch;
+    }
+    .case-flow-step {
+        background: var(--bg-alt); border-radius: 12px; padding: 20px 16px;
+        text-align: center; display: flex; flex-direction: column; justify-content: flex-start;
+    }
+    .case-flow-step .step-label {
+        font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+        margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .case-flow-step.step-problem .step-label { color: #f87171; }
+    .case-flow-step.step-approach .step-label { color: #60a5fa; }
+    .case-flow-step.step-change .step-label { color: var(--accent); }
+    .case-flow-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .case-flow-arrow {
+        display: flex; align-items: center; justify-content: center;
+        color: var(--text-muted); font-size: 18px; padding: 0 8px;
+    }
+
+    .case-quote {
+        margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border);
+        font-size: 14px; color: var(--text-muted); font-style: italic;
+        display: flex; align-items: flex-start; gap: 8px;
+    }
+    .case-quote i { color: var(--accent); margin-top: 2px; flex-shrink: 0; }
+
+    @media (max-width: 768px) {
+        .case-flow { grid-template-columns: 1fr; gap: 8px; }
+        .case-flow-arrow { transform: rotate(90deg); padding: 4px 0; }
     }
 
     /* ===== 섹션 3: 전략 리더십 ===== */
@@ -291,6 +366,16 @@
     .diagnosis-conclusion {
         margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border);
         font-size: 20px; font-weight: 800; color: var(--accent); text-align: center;
+        margin-bottom: 20px;
+    }
+    .diagnosis-cta {
+        display: block; text-align: center; color: var(--accent);
+        font-size: 15px; font-weight: 700; text-decoration: none;
+        padding: 12px; border-radius: 10px; transition: all 0.2s;
+        border: 1px solid var(--border-accent);
+    }
+    .diagnosis-cta:hover {
+        background: rgba(81,180,152,0.08); transform: translateY(-1px);
     }
 
     /* ===== 섹션 5: Before / After ===== */
@@ -418,7 +503,7 @@
         margin: 48px auto 0;
     }
     .scarcity-box .big-num {
-        font-size: clamp(36px, 6vw, 56px); font-weight: 900; color: var(--accent);
+        font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: var(--accent);
         margin-bottom: 8px;
         animation: scarcityPulse 3s ease-in-out infinite;
     }
@@ -434,9 +519,32 @@
         padding-top: 20px; border-top: 1px solid var(--border);
     }
 
+    /* 스카시티 섹션 특별 배경 */
+    .section-scarcity {
+        background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(250,204,21,0.03) 0%, transparent 60%),
+                    #181E2A;
+    }
+    .section-scarcity::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent 10%, rgba(250,204,21,0.15) 50%, transparent 90%);
+    }
+    .scarcity-cta {
+        display: inline-block; margin-top: 24px;
+        padding: 14px 36px; border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        color: #fff; font-size: 16px; font-weight: 700;
+        text-decoration: none; transition: all 0.3s;
+    }
+    .scarcity-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(81,180,152,0.3);
+    }
+
     /* ===== 섹션 11: 대표 메시지 ===== */
     .founder-section {
-        padding: 100px 0; background: var(--bg-alt);
+        padding: 100px 0;
+        background: linear-gradient(180deg, #12161e 0%, var(--bg-alt) 40%, #12161e 100%);
     }
     .founder-card {
         display: flex; gap: 48px; align-items: center;
@@ -489,7 +597,7 @@
     /* ===== CTA / 문의 폼 ===== */
     .cta-section {
         padding: 100px 0;
-        background: linear-gradient(180deg, var(--bg-dark) 0%, #0a1a16 100%);
+        background: linear-gradient(180deg, #0c1a1a 0%, #0a1e18 40%, #0e1114 100%);
     }
     .cta-form-wrap {
         max-width: 520px; margin: 0 auto; text-align: center;
@@ -595,20 +703,20 @@
     <div class="top-banner">
         <div class="banner-track">
             <div class="banner-content">
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
             </div>
             <div class="banner-content">
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
-                <span class="banner-item">📣 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
+                <span class="banner-item">🔥 2/25~3/3 전략 팀장 미팅 · 딱 2팀만 진행합니다</span>
             </div>
         </div>
     </div>
@@ -659,54 +767,94 @@
                 <p class="hero-meta">
                     최소 3개월 <span>·</span> 월 100만원 <span>·</span> 광고비 별도
                 </p>
+                <div class="hero-scroll-hint">
+                    <span>SCROLL</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== 2. 실제 사례 (숫자 중심) ===== -->
+    <!-- ===== 2. 전략 설계 사례 (프레임워크 중심) ===== -->
     <section class="section section-alt" id="cases">
         <div class="container">
             <div class="text-center fade-up">
-                <p class="section-eyebrow">Results</p>
-                <h2 class="section-title">실제 전략 설계 사례</h2>
-                <p class="section-sub mx-auto">숫자로 보여드립니다. (2~3개만, 길게 쓰지 않습니다.)</p>
+                <p class="section-eyebrow">Case Study</p>
+                <h2 class="section-title">우리가 문제를 푸는 방식</h2>
+                <p class="section-sub mx-auto">숫자보다 중요한 건, 문제를 어떻게 접근하느냐입니다.</p>
             </div>
             <div class="cases-grid">
                 <!-- Case 1 -->
                 <div class="case-card fade-up">
-                    <span class="case-label">Case 1</span>
-                    <h3>D2C 브랜드, 광고비 월 400만원</h3>
-                    <div class="case-row">
-                        <div class="case-item">
-                            <span class="tag tag-problem">문제</span>
-                            <p>광고는 돌리는데 전환율이 안 나옴, 실험 구조 없음</p>
+                    <div class="case-header">
+                        <span class="case-label">Case 1</span>
+                        <span class="case-industry">D2C 브랜드 · 광고비 월 400만원</span>
+                    </div>
+                    <h3>"광고는 계속 돌리는데, 왜 매출이 안 느는지 모르겠어요"</h3>
+                    <div class="case-flow">
+                        <div class="case-flow-step step-problem">
+                            <div class="step-label">발견한 문제</div>
+                            <p>광고 클릭 후 랜딩 → 상세 → 구매 흐름에서<br>이탈 지점이 파악되지 않고 있었음</p>
                         </div>
-                        <div class="case-item">
-                            <span class="tag tag-action">조치</span>
-                            <p>어디서 고객이 이탈하는지 찾고, 구매 흐름 재설계</p>
+                        <div class="case-flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="case-flow-step step-approach">
+                            <div class="step-label">설계한 구조</div>
+                            <p>퍼널별 이탈률 측정 체계 구축<br>주 단위 A/B 실험 프레임 세팅</p>
                         </div>
-                        <div class="case-item">
-                            <span class="tag tag-result">결과</span>
-                            <p>전환율 <span class="case-placeholder">___%</span> → <span class="case-placeholder">___%</span> / 광고비 동일, 매출 <span class="case-placeholder">___배</span></p>
+                        <div class="case-flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="case-flow-step step-change">
+                            <div class="step-label">달라진 점</div>
+                            <p>어디서 새는지 보이기 시작<br>실험 → 검증 → 반복 구조 정착</p>
                         </div>
                     </div>
                 </div>
+
                 <!-- Case 2 -->
                 <div class="case-card fade-up">
-                    <span class="case-label">Case 2</span>
-                    <h3>커머스 브랜드, ROAS는 유지되지만 매출 변동</h3>
-                    <div class="case-row">
-                        <div class="case-item">
-                            <span class="tag tag-problem">문제</span>
-                            <p>ROAS는 유지되지만 매출 변동 심함, 팀 내 전략 공유 없음</p>
+                    <div class="case-header">
+                        <span class="case-label">Case 2</span>
+                        <span class="case-industry">커머스 브랜드 · 마케터 2명 운영</span>
+                    </div>
+                    <h3>"ROAS는 맞추는데, 매출이 들쭉날쭉이에요"</h3>
+                    <div class="case-flow">
+                        <div class="case-flow-step step-problem">
+                            <div class="step-label">발견한 문제</div>
+                            <p>각자 광고 돌리는데<br>실험 기록·공유 구조가 없었음</p>
                         </div>
-                        <div class="case-item">
-                            <span class="tag tag-action">조치</span>
-                            <p>전환 구조 재설계, 실험 우선순위 체계화, 팀 역할 재정렬</p>
+                        <div class="case-flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="case-flow-step step-approach">
+                            <div class="step-label">설계한 구조</div>
+                            <p>실험 우선순위 체계화<br>역할 분담 + 주간 전략 미팅 도입</p>
                         </div>
-                        <div class="case-item">
-                            <span class="tag tag-result">결과</span>
-                            <p>전환율 <span class="case-placeholder">+___%</span> 개선 / 의사결정 속도 단축, 광고 효율 안정화</p>
+                        <div class="case-flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="case-flow-step step-change">
+                            <div class="step-label">달라진 점</div>
+                            <p>팀이 근거를 가지고 제안하기 시작<br>의사결정 속도와 광고 효율 안정화</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 3 -->
+                <div class="case-card fade-up">
+                    <div class="case-header">
+                        <span class="case-label">Case 3</span>
+                        <span class="case-industry">스타트업 · 광고비 월 300만원</span>
+                    </div>
+                    <h3>"뭘 해야 하는지는 아는데, 우선순위를 못 정하겠어요"</h3>
+                    <div class="case-flow">
+                        <div class="case-flow-step step-problem">
+                            <div class="step-label">발견한 문제</div>
+                            <p>할 것이 너무 많은데<br>뭐부터 해야 하는지 기준이 없었음</p>
+                        </div>
+                        <div class="case-flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="case-flow-step step-approach">
+                            <div class="step-label">설계한 구조</div>
+                            <p>임팩트 × 실행 난이도 매트릭스 도입<br>월간 → 주간 실행 로드맵 세팅</p>
+                        </div>
+                        <div class="case-flow-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="case-flow-step step-change">
+                            <div class="step-label">달라진 점</div>
+                            <p>대표 없이도 팀이 우선순위 판단<br>실행 속도와 예측 가능성 확보</p>
                         </div>
                     </div>
                 </div>
@@ -714,8 +862,8 @@
         </div>
     </section>
 
-    <!-- ===== 3. 전략 리더십 ===== -->
-    <section class="section" id="philosophy">
+    <!-- ===== 3. 왜 필요한가 (철학 + 진단 통합) ===== -->
+    <section class="section section-why" id="why">
         <div class="container">
             <div class="philosophy-block fade-up">
                 <p class="big-quote">
@@ -724,25 +872,11 @@
                 </p>
                 <p>마케터가 있어도, 전략이 정리되지 않으면</p>
                 <p>같은 자리에서 반복하게 됩니다.</p>
-                <p style="margin-top:16px;">전략은 감이 아니라 결정이고,</p>
-                <p>결정이 반복되면 시스템이 됩니다.</p>
-                <p style="margin-top:16px; color: var(--accent); font-weight: 700;">
-                    우리는 팀이 스스로 전략적으로 움직이도록 설계합니다.
-                </p>
             </div>
-        </div>
-    </section>
 
-    <div class="divider"></div>
-
-    <!-- ===== 4. 자기 진단 ===== -->
-    <section class="section" id="diagnosis">
-        <div class="container">
-            <div class="text-center fade-up">
-                <p class="section-eyebrow">Self Check</p>
-                <h2 class="section-title">지금 이런 상황이라면</h2>
-            </div>
-            <div class="diagnosis-box fade-up">
+            <!-- 진단 체크리스트 - 바로 이어서 -->
+            <div class="diagnosis-box fade-up" style="margin-top: 56px;">
+                <p style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 24px; text-align: center;">혹시 이런 상황이라면</p>
                 <ul class="diagnosis-list">
                     <li>광고비는 쓰고 있는데, 성과가 들쭉날쭉하다</li>
                     <li>ROAS는 보고 있지만 예측이 안 된다</li>
@@ -750,7 +884,10 @@
                     <li>전략은 결국 대표가 다 판단하고 있다</li>
                     <li>이대로 계속 써도 되는 건지 확신이 없다</li>
                 </ul>
-                <p class="diagnosis-conclusion">전략을 정리할 타이밍입니다.</p>
+                <p class="diagnosis-conclusion">
+                    전략을 정리할 타이밍입니다.
+                </p>
+                <a href="#contact" class="diagnosis-cta">전략 팀장 미팅 신청 →</a>
             </div>
         </div>
     </section>
@@ -786,7 +923,7 @@
     </section>
 
     <!-- ===== 6. 프로세스 ===== -->
-    <section class="section" id="process">
+    <section class="section" id="process" style="background: linear-gradient(180deg, var(--bg-dark) 0%, #101620 50%, var(--bg-dark) 100%);">
         <div class="container">
             <div class="text-center fade-up">
                 <p class="section-eyebrow">Process</p>
@@ -874,28 +1011,55 @@
     </section>
 
     <!-- ===== 8. 운영 구조 ===== -->
-    <section class="section" id="operation">
+    <section class="section" id="operation" style="background: linear-gradient(180deg, var(--bg-dark) 0%, #0e1518 50%, var(--bg-dark) 100%);">
         <div class="container">
             <div class="text-center fade-up">
                 <p class="section-eyebrow">Structure</p>
-                <h2 class="section-title">운영 구조</h2>
+                <h2 class="section-title">함께 일하는 방식</h2>
             </div>
             <div class="operation-grid fade-up">
                 <div class="operation-item">
                     <div class="op-value">월 100만원</div>
-                    <div class="op-label">전략 설계 비용</div>
+                    <div class="op-label">전략 설계 비용 (VAT 별도)</div>
                 </div>
                 <div class="operation-item">
                     <div class="op-value">최소 3개월</div>
-                    <div class="op-label">계약 기간</div>
+                    <div class="op-label">구조가 정착되는 최소 기간</div>
                 </div>
                 <div class="operation-item">
-                    <div class="op-value">주간 미팅</div>
-                    <div class="op-label">전략 점검 · 방향 조정</div>
+                    <div class="op-value">주 1회 미팅</div>
+                    <div class="op-label">60분 전략 점검 + 방향 조정</div>
                 </div>
                 <div class="operation-item">
                     <div class="op-value">내부 팀 실행</div>
-                    <div class="op-label">실행은 내부 팀이 담당</div>
+                    <div class="op-label">우리는 설계, 실행은 팀이</div>
+                </div>
+            </div>
+            <!-- 구체적 운영 흐름 -->
+            <div class="operation-flow fade-up" style="max-width: 640px; margin: 40px auto 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 32px;">
+                <p style="font-size: 14px; font-weight: 700; color: var(--text-muted); margin-bottom: 20px;">매주 이렇게 진행됩니다</p>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <span style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: rgba(81,180,152,0.1); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--accent);">1</span>
+                        <div>
+                            <p style="font-size: 15px; font-weight: 700; color: var(--text);">주간 데이터 리뷰</p>
+                            <p style="font-size: 13px; color: var(--text-secondary);">지난 주 실험 결과 분석, 지표 변화 확인</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <span style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: rgba(81,180,152,0.1); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--accent);">2</span>
+                        <div>
+                            <p style="font-size: 15px; font-weight: 700; color: var(--text);">전략 방향 조정</p>
+                            <p style="font-size: 13px; color: var(--text-secondary);">다음 주 실험 설계, 우선순위 재정렬</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; align-items: flex-start;">
+                        <span style="flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; background: rgba(81,180,152,0.1); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--accent);">3</span>
+                        <div>
+                            <p style="font-size: 15px; font-weight: 700; color: var(--text);">팀 실행 + 슬랙 피드백</p>
+                            <p style="font-size: 13px; color: var(--text-secondary);">미팅 외에도 슬랙으로 실시간 피드백</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p style="text-align:center; margin-top:24px; font-size:14px; color:var(--text-muted);">
@@ -925,18 +1089,19 @@
     </section>
 
     <!-- ===== 10. 희소성 ===== -->
-    <section class="section section-alt" id="scarcity">
+    <section class="section section-scarcity" id="scarcity">
         <div class="container">
             <div class="text-center fade-up">
-                <p class="section-eyebrow">Limited</p>
-                <h2 class="section-title">한 회사에 최소 3개월을 들이기 때문에</h2>
+                <p class="section-eyebrow" style="color: #FACC15;">Limited</p>
+                <h2 class="section-title">한 회사에 온전히 집중하기 위해</h2>
             </div>
             <div class="scarcity-box fade-up">
-                <p class="big-num">연간 8~12개</p>
-                <p class="scarcity-sub">회사만 전략 설계를 진행할 수 있습니다.</p>
+                <p class="big-num">동시 진행 최대 2팀</p>
+                <p class="scarcity-sub">그래서 늘 자리가 열려 있지 않습니다.</p>
                 <p class="scarcity-period">
-                    📣 2/25 ~ 3/3, 딱 2팀 모집합니다.
+                    🔥 2/25 ~ 3/3, 딱 2팀 모집합니다.
                 </p>
+                <a href="#contact" class="scarcity-cta">전략 팀장 미팅 신청 →</a>
             </div>
         </div>
     </section>
