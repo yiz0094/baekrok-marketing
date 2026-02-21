@@ -21,7 +21,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>백록마케팅 – 월 100만원 마케팅 전략 팀장</title>
-    <meta name="description" content="광고비는 쓰고 있는데, 이게 맞는 방향인지 모르겠다면. 월 100만원으로 마케팅 전략 팀장을 두세요. 마케팅 구조를 다시 짜는 전략 설계 서비스.">
+    <meta name="description" content="광고비는 쓰고 있는데, 맞는 방향인지 모르겠다면. 월 100만원으로 마케팅 전략 팀장을 두세요. 마케팅 구조를 다시 짜는 전략 설계 서비스.">
 
     <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
@@ -576,6 +576,9 @@
         max-width: 900px; margin-left: auto; margin-right: auto;
     }
     .team-sub-title { font-size: 14px; color: var(--text-muted); font-weight: 600; margin-bottom: 16px; }
+    .team-sub-cards {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px;
+    }
     .team-sub-card {
         display: flex; align-items: center; gap: 16px;
     }
@@ -754,7 +757,7 @@
             <div class="fade-up">
                 <h1 class="hero-headline">
                     광고비는 쓰고 있는데<br>
-                    <span class="accent">이게 맞는 방향인지 모르겠다면</span>
+                    <span class="accent">맞는 방향인지 모르겠다면</span>
                 </h1>
                 <p class="hero-sub">
                     월 100만원 마케팅 전략 팀장<br>
@@ -1124,18 +1127,19 @@
                 </div>
             </div>
 
-            <!-- 팀원 서브 -->
-            <div class="team-sub fade-up">
-                <p class="team-sub-title">함께하는 팀</p>
-                <div class="team-sub-card">
-                    <div class="team-sub-photo">
-                        <img src="images/team/director_final.jpg" alt="김하영 운영 디렉터">
-                    </div>
-                    <div class="team-sub-info">
-                        <div class="name">김하영</div>
-                        <div class="role">운영 디렉터</div>
-                        <div class="desc">마케팅 실행 및 운영 · 콘텐츠 제작 · 캠페인 관리</div>
-                    </div>
+            <!-- 팀원: 김하영 운영 디렉터 -->
+            <div class="founder-card fade-up" style="margin-top: 64px;">
+                <div class="founder-photo">
+                    <img src="images/team/director_final.jpg" alt="김하영 운영 디렉터">
+                </div>
+                <div class="founder-message">
+                    <h3>퀄리티는 소통에서 만들어집니다.</h3>
+                    <p>소통이 잘 되어야 방향이 정확해지고,<br>방향이 정확해야 실행에서 오류가 없습니다.</p>
+                    <p>빠르게 맞추고, 자주 확인하고, 놓치지 않는 것.<br>그게 결과의 차이를 만든다고 믿습니다.</p>
+                    <p class="founder-highlight">좋은 성과는 좋은 소통에서 시작됩니다.</p>
+                    <p class="founder-name">
+                        <strong>김하영</strong> · 운영 디렉터
+                    </p>
                 </div>
             </div>
         </div>

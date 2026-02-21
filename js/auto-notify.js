@@ -78,9 +78,10 @@ const TEMPLATES = {
                 <div style="background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:20px; margin-top:24px;">
                     <p style="font-size:14px; color:#6B7280; margin:0 0 8px;"><strong>미팅에서 이런 이야기를 나눕니다:</strong></p>
                     <ul style="font-size:14px; color:#6B7280; margin:0; padding-left:20px;">
-                        <li>현재 마케팅 구조 진단</li>
-                        <li>광고비가 어디서 새는지 분석</li>
-                        <li>3개월 전략 설계 방향 제안</li>
+                        <li>회사 소개 (업종, 타겟 고객, 주요 상품/서비스)</li>
+                        <li>현재 겪고 있는 마케팅 고민이나 문제</li>
+                        <li>지금까지 시도했던 마케팅 이력 (광고, 채널 등)</li>
+                        <li>백록마케팅에 기대하는 점</li>
                     </ul>
                 </div>
 
