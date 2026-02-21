@@ -438,12 +438,13 @@
 
     /* ===== 섹션 7: 채용 비교 ===== */
     .compare-table {
-        margin-top: 48px; width: 100%; border-collapse: collapse;
+        margin-top: 32px; max-width: 720px; width: 100%; margin-left: auto; margin-right: auto;
+        border-collapse: collapse;
         background: var(--bg-card); border-radius: 16px; overflow: hidden;
         border: 1px solid var(--border);
     }
     .compare-table th, .compare-table td {
-        padding: 18px 24px; text-align: left; font-size: 15px;
+        padding: 14px 20px; text-align: left; font-size: 15px;
         border-bottom: 1px solid var(--border);
     }
     .compare-table thead th {
@@ -456,12 +457,12 @@
     .compare-table tbody td:last-child { color: var(--accent); font-weight: 600; background: rgba(81,180,152,0.04); }
     .compare-table tbody tr:last-child td { border-bottom: none; }
     .compare-conclusion {
-        margin-top: 28px; text-align: center; font-size: 17px;
+        margin-top: 20px; text-align: center; font-size: 17px;
         color: var(--text-secondary); line-height: 1.6;
     }
     .compare-conclusion strong { color: var(--text); }
     @media (max-width: 640px) {
-        .compare-table th, .compare-table td { padding: 14px 16px; font-size: 13px; }
+        .compare-table th, .compare-table td { padding: 12px 14px; font-size: 13px; }
     }
 
     /* ===== 섹션 8: 운영 구조 ===== */
@@ -974,7 +975,7 @@
     </section>
 
     <!-- ===== 7. 채용 비교 ===== -->
-    <section class="section section-alt" id="compare">
+    <section class="section section-alt" id="compare" style="padding: 72px 0;">
         <div class="container">
             <div class="text-center fade-up">
                 <p class="section-eyebrow">Comparison</p>
