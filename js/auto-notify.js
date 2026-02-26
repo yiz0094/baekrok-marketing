@@ -12,6 +12,9 @@
 // 설정 - 각 서비스 가입 후 값을 입력하세요
 // ============================================
 const NOTIFY_CONFIG = {
+    // 관리자 알림 이메일
+    adminEmail: 'yiz.mkt@gmail.com',
+
     // Cal.com 미팅 예약 링크
     calcom: {
         bookingUrl: 'https://cal.com/이재은-이즈/30min'
@@ -48,7 +51,47 @@ const TEMPLATES = {
     emailSubject: (name) =>
         `[백록마케팅] ${name}님, 전략 팀장 미팅 일정을 선택해주세요`,
 
-    // 이메일 본문 (HTML)
+    // 관리자 알림 이메일 제목
+    adminSubject: (name, company) =>
+        `[새 문의] ${company} - ${name}님이 미팅을 신청했습니다`,
+
+    // 관리자 알림 이메일 본문 (HTML)
+    adminBody: (name, company, phone, email) => `
+        <div style="max-width:600px; margin:0 auto; font-family:'Apple SD Gothic Neo','Pretendard',sans-serif; color:#333; line-height:1.7;">
+            <div style="background:#0E1114; padding:32px; border-radius:12px 12px 0 0; text-align:center;">
+                <h1 style="color:#51B498; font-size:20px; margin:0;">새 미팅 신청이 들어왔습니다</h1>
+            </div>
+            <div style="padding:32px; background:#f9fafb; border:1px solid #e5e7eb; border-top:none; border-radius:0 0 12px 12px;">
+                <table style="width:100%; border-collapse:collapse; font-size:15px;">
+                    <tr style="border-bottom:1px solid #e5e7eb;">
+                        <td style="padding:12px 8px; font-weight:700; color:#6B7280; width:100px;">회사명</td>
+                        <td style="padding:12px 8px;">${company}</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e5e7eb;">
+                        <td style="padding:12px 8px; font-weight:700; color:#6B7280;">담당자</td>
+                        <td style="padding:12px 8px;">${name}</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #e5e7eb;">
+                        <td style="padding:12px 8px; font-weight:700; color:#6B7280;">연락처</td>
+                        <td style="padding:12px 8px;">${phone || '-'}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:12px 8px; font-weight:700; color:#6B7280;">이메일</td>
+                        <td style="padding:12px 8px;">${email || '-'}</td>
+                    </tr>
+                </table>
+                <div style="text-align:center; margin-top:24px;">
+                    <a href="https://100record.com/admin.html"
+                       style="display:inline-block; padding:12px 32px; background:#51B498; color:#fff;
+                              text-decoration:none; border-radius:8px; font-weight:700; font-size:14px;">
+                        관리자 페이지에서 확인 →
+                    </a>
+                </div>
+            </div>
+        </div>
+    `,
+
+    // 고객용 이메일 본문 (HTML)
     emailBody: (name, company, bookingUrl) => `
         <div style="max-width:600px; margin:0 auto; font-family:'Apple SD Gothic Neo','Pretendard',sans-serif; color:#333; line-height:1.7;">
             <div style="background:#0E1114; padding:32px; border-radius:12px 12px 0 0; text-align:center;">
@@ -183,6 +226,28 @@ async function sendEmail(email, name, company, bookingUrl) {
 }
 
 /**
+ * 관리자 알림 이메일 발송
+ */
+async function sendAdminNotification(formData) {
+    const cfg = NOTIFY_CONFIG.emailjs;
+    if (cfg.serviceId === 'YOUR_EMAILJS_SERVICE_ID' || typeof emailjs === 'undefined') {
+        return null;
+    }
+
+    const { contact_name, company_name, phone, email } = formData;
+    const templateParams = {
+        to_email: NOTIFY_CONFIG.adminEmail,
+        to_name: '백록마케팅',
+        company_name: company_name,
+        subject: TEMPLATES.adminSubject(contact_name, company_name),
+        message_html: TEMPLATES.adminBody(contact_name, company_name, phone, email),
+        booking_url: 'https://100record.com/admin.html'
+    };
+
+    return emailjs.send(cfg.serviceId, cfg.templateId, templateParams, cfg.publicKey);
+}
+
+/**
  * 통합 자동 발송
  * 폼 제출 성공 후 호출됨
  */
@@ -195,9 +260,17 @@ async function sendAutoNotifications(formData) {
     }
 
     const { contact_name, company_name, phone, email } = formData;
-    const results = { email: null, sms: null };
+    const results = { email: null, sms: null, adminEmail: null };
 
-    // 이메일 발송 (비동기, 실패해도 SMS는 발송)
+    // 관리자 알림 이메일 발송
+    try {
+        results.adminEmail = await sendAdminNotification(formData);
+        console.log('관리자 알림 발송 성공:', NOTIFY_CONFIG.adminEmail);
+    } catch (err) {
+        console.error('관리자 알림 발송 실패:', err);
+    }
+
+    // 고객 이메일 발송 (비동기, 실패해도 SMS는 발송)
     if (email) {
         try {
             results.email = await sendEmail(email, contact_name, company_name, bookingUrl);
