@@ -1314,6 +1314,15 @@
                     };
                     await StorageBackend.create(data);
 
+                    // GTM 전환 이벤트
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'form_submit',
+                        form_name: 'meeting_request',
+                        company_name: data.company_name,
+                        contact_email: data.email
+                    });
+
                     // 자동 이메일/SMS 발송
                     sendAutoNotifications(data).catch(err => console.error('자동 발송 실패:', err));
 
