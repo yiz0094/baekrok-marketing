@@ -330,6 +330,20 @@
         .case-flow-arrow { transform: rotate(90deg); padding: 4px 0; }
     }
 
+    /* ===== 클라이언트 로고 ===== */
+    .logo-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        max-width: 720px; margin: 40px auto 0;
+    }
+    .logo-grid img {
+        width: 100%; height: auto; border-radius: 12px; opacity: 0.6;
+        transition: opacity 0.3s ease;
+    }
+    .logo-grid img:hover { opacity: 1; }
+    @media (max-width: 480px) {
+        .logo-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+
     /* ===== 섹션 3: 전략 리더십 ===== */
     .philosophy-block {
         max-width: 680px; margin: 48px auto 0; text-align: center;
@@ -865,6 +879,27 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 클라이언트 로고 ===== -->
+    <section class="section" id="clients">
+        <div class="container">
+            <div class="text-center fade-up">
+                <p class="section-eyebrow">Clients</p>
+                <h2 class="section-title">함께한 클라이언트</h2>
+            </div>
+            <div class="logo-grid fade-up">
+                <img src="images/clients/dr_ean.png" alt="Dr.Ean">
+                <img src="images/clients/eat_around.png" alt="eat.around">
+                <img src="images/clients/zero_waste.png" alt="지구별가게">
+                <img src="images/clients/good_job_jeju.png" alt="굿잡제주">
+                <img src="images/clients/gosandodeupjip.png" alt="고산도읍집">
+                <img src="images/clients/lee_and_law.png" alt="Lee & Law">
+                <img src="images/clients/mehls.png" alt="Mehls">
+                <img src="images/clients/neulsodam.png" alt="늘소담">
+                <img src="images/clients/rentre.png" alt="Rentre">
             </div>
         </div>
     </section>
