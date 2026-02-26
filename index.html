@@ -1343,6 +1343,59 @@
             });
         }
 
+        // ===== GTM 이벤트 추적 =====
+        window.dataLayer = window.dataLayer || [];
+
+        // 1) CTA 버튼 클릭 추적
+        document.querySelectorAll('a[href="#contact"]').forEach(link => {
+            link.addEventListener('click', function() {
+                let location = 'unknown';
+                if (this.classList.contains('nav-cta')) location = 'navigation';
+                else if (this.classList.contains('hero-cta')) location = 'hero';
+                else if (this.classList.contains('diagnosis-cta')) location = 'diagnosis';
+                else if (this.classList.contains('scarcity-cta')) location = 'scarcity';
+                else if (this.closest('.mobile-menu')) location = 'mobile_menu';
+
+                window.dataLayer.push({
+                    event: 'cta_click',
+                    cta_location: location,
+                    cta_text: this.textContent.trim()
+                });
+            });
+        });
+
+        // 2) 폼 시작 추적 (첫 필드 포커스 시 1회만)
+        let formStarted = false;
+        if (form) {
+            form.querySelectorAll('input, select, textarea').forEach(field => {
+                field.addEventListener('focus', function() {
+                    if (!formStarted) {
+                        formStarted = true;
+                        window.dataLayer.push({
+                            event: 'form_start',
+                            form_name: 'meeting_request',
+                            first_field: this.name
+                        });
+                    }
+                });
+            });
+        }
+
+        // 3) 폼 이탈 추적 (폼 시작했지만 제출 안 하고 페이지 떠날 때)
+        let formSubmitted = false;
+        if (form) {
+            form.addEventListener('submit', function() { formSubmitted = true; });
+        }
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden' && formStarted && !formSubmitted) {
+                navigator.sendBeacon && navigator.sendBeacon('https://www.google-analytics.com/collect', '');
+                window.dataLayer.push({
+                    event: 'form_abandon',
+                    form_name: 'meeting_request'
+                });
+            }
+        });
+
         console.log('%c🚀 백록마케팅 v2', 'font-size: 20px; font-weight: bold; color: #51B498;');
     });
     </script>
