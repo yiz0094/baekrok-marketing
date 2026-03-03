@@ -270,6 +270,223 @@
         50% { opacity: 0.8; transform: translateY(6px); }
     }
 
+    /* ===== 히어로: 아이브로우 ===== */
+    .hero-eyebrow {
+        font-size: 14px; font-weight: 700; color: var(--accent);
+        letter-spacing: 0.08em; margin-bottom: 16px; opacity: 0.85;
+    }
+
+    /* ===== 히어로: 퀵 CTA 폼 ===== */
+    .hero-quick-form-wrap {
+        max-width: 560px; margin: 0 auto 24px;
+    }
+    .hero-quick-form {
+        display: flex; gap: 8px; align-items: stretch;
+    }
+    .hero-input {
+        flex: 1; padding: 16px 18px; border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(28,32,40,0.8); backdrop-filter: blur(8px);
+        color: var(--text); font-size: 15px; transition: all 0.2s;
+    }
+    .hero-input::placeholder { color: var(--text-muted); }
+    .hero-input:focus {
+        outline: none; border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .hero-quick-submit {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 16px 28px; border: none; border-radius: 10px;
+        background: var(--accent); color: #0D2226;
+        font-size: 15px; font-weight: 800; cursor: pointer;
+        white-space: nowrap; transition: all 0.3s;
+        box-shadow: 0 6px 24px rgba(81,180,152,0.25);
+        animation: ctaPulse 2.5s ease-in-out infinite;
+    }
+    .hero-quick-submit:hover {
+        background: var(--accent-dark); transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(81,180,152,0.45); animation: none;
+    }
+    .hero-quick-submit:disabled {
+        opacity: 0.6; cursor: not-allowed; transform: none; animation: none;
+    }
+    .hero-form-note {
+        margin-top: 10px; font-size: 12px; color: var(--text-muted);
+        display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .hero-form-note i { font-size: 11px; color: var(--accent); opacity: 0.6; }
+
+    /* ===== 히어로: 소셜 프루프 ===== */
+    .hero-social-proof {
+        margin-top: 40px; padding-top: 32px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-stats {
+        display: flex; justify-content: center; align-items: center;
+        gap: 32px; margin-bottom: 28px;
+    }
+    .hero-stat {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .hero-stat-num {
+        font-size: clamp(24px, 4vw, 36px); font-weight: 900;
+        color: var(--accent); line-height: 1;
+    }
+    .hero-stat-label {
+        font-size: 13px; color: var(--text-muted); font-weight: 500;
+    }
+    .hero-stat-divider {
+        width: 1px; height: 36px; background: rgba(255,255,255,0.08);
+    }
+    .hero-clients {
+        display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .hero-clients-label {
+        font-size: 12px; color: var(--text-muted);
+        letter-spacing: 0.05em; font-weight: 600;
+    }
+    .hero-logo-strip {
+        display: flex; align-items: center; justify-content: center; gap: 24px;
+    }
+    .hero-logo-strip img {
+        height: 32px; width: auto; opacity: 0.4;
+        filter: grayscale(100%); transition: all 0.3s;
+    }
+    .hero-logo-strip img:hover { opacity: 0.8; filter: grayscale(0%); }
+
+    /* ===== 히어로: 모바일 반응형 ===== */
+    @media (max-width: 768px) {
+        .hero-quick-form { flex-direction: column; gap: 10px; }
+        .hero-quick-submit {
+            width: 100%; justify-content: center; padding: 18px; font-size: 16px;
+        }
+        .hero-stats { gap: 16px; }
+        .hero-stat-num { font-size: 22px; }
+        .hero-stat-label { font-size: 11px; }
+        .hero-stat-divider { height: 28px; }
+        .hero-logo-strip {
+            gap: 16px; flex-wrap: nowrap;
+            overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px;
+        }
+        .hero-logo-strip img { height: 24px; flex-shrink: 0; }
+    }
+    @media (max-width: 480px) {
+        .hero-stats { gap: 12px; }
+        .hero-logo-strip { gap: 12px; }
+        .hero-logo-strip img { height: 20px; }
+    }
+
+    /* ===== 플로팅 CTA ===== */
+    .floating-cta {
+        position: fixed; bottom: 24px; right: 24px; z-index: 999;
+        opacity: 0; transform: translateY(20px); pointer-events: none;
+        transition: all 0.3s ease;
+    }
+    .floating-cta.visible {
+        opacity: 1; transform: translateY(0); pointer-events: auto;
+    }
+    .floating-cta a {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 16px 28px; border-radius: 50px;
+        background: var(--accent); color: #0D2226;
+        font-size: 15px; font-weight: 800; text-decoration: none;
+        box-shadow: 0 8px 32px rgba(81,180,152,0.4);
+        transition: all 0.3s;
+    }
+    .floating-cta a:hover {
+        background: var(--accent-dark); transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(81,180,152,0.5);
+    }
+    @media (max-width: 768px) {
+        .floating-cta {
+            bottom: 0; right: 0; left: 0;
+            transform: translateY(100%); border-radius: 0;
+        }
+        .floating-cta.visible { transform: translateY(0); }
+        .floating-cta a {
+            display: flex; justify-content: center; width: 100%;
+            border-radius: 0; padding: 18px;
+            font-size: 16px;
+        }
+    }
+
+    /* ===== 미니 희소성 바 ===== */
+    .mini-scarcity {
+        padding: 20px 0; text-align: center;
+        background: linear-gradient(135deg, rgba(81,180,152,0.12) 0%, rgba(81,180,152,0.04) 100%);
+        border-top: 1px solid rgba(81,180,152,0.15);
+        border-bottom: 1px solid rgba(81,180,152,0.15);
+    }
+    .mini-scarcity-inner {
+        display: flex; align-items: center; justify-content: center;
+        gap: 16px; flex-wrap: wrap;
+    }
+    .mini-scarcity-text {
+        font-size: 15px; color: var(--text); font-weight: 600;
+    }
+    .mini-scarcity-text .accent { font-weight: 800; }
+    .mini-scarcity a {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 10px 20px; border-radius: 8px;
+        background: var(--accent); color: #0D2226;
+        font-size: 14px; font-weight: 700; text-decoration: none;
+        transition: all 0.2s;
+    }
+    .mini-scarcity a:hover { background: var(--accent-dark); }
+
+    /* ===== 중간 CTA 블록 ===== */
+    .mid-cta {
+        padding: 56px 0; text-align: center;
+        background: linear-gradient(180deg, rgba(81,180,152,0.08) 0%, transparent 100%);
+        border-top: 1px solid rgba(81,180,152,0.1);
+        border-bottom: 1px solid rgba(81,180,152,0.1);
+    }
+    .mid-cta h3 {
+        font-size: clamp(20px, 3vw, 28px); font-weight: 800;
+        color: var(--text); margin-bottom: 8px;
+    }
+    .mid-cta p {
+        font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;
+    }
+    .mid-cta a {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 16px 36px; border-radius: 12px;
+        background: var(--accent); color: #0D2226;
+        font-size: 16px; font-weight: 800; text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 6px 24px rgba(81,180,152,0.25);
+    }
+    .mid-cta a:hover {
+        background: var(--accent-dark); transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(81,180,152,0.45);
+    }
+
+    /* ===== 폼 상단 후기 ===== */
+    .form-testimonials {
+        display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;
+        justify-content: center;
+    }
+    .form-testimonial {
+        flex: 1; min-width: 240px; max-width: 320px;
+        padding: 20px; border-radius: 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.06);
+    }
+    .form-testimonial q {
+        display: block; font-size: 14px; color: var(--text-secondary);
+        font-style: italic; line-height: 1.6; quotes: none;
+    }
+    .form-testimonial q::before { content: '"'; color: var(--accent); font-size: 20px; font-weight: 700; margin-right: 2px; }
+    .form-testimonial q::after { content: '"'; color: var(--accent); font-size: 20px; font-weight: 700; margin-left: 2px; }
+    .form-testimonial cite {
+        display: block; margin-top: 10px; font-size: 12px;
+        color: var(--text-muted); font-style: normal; font-weight: 600;
+    }
+    @media (max-width: 768px) {
+        .form-testimonials { flex-direction: column; align-items: center; }
+        .form-testimonial { max-width: 100%; }
+    }
+
     /* ===== 섹션 2: 사례 (프레임워크 중심) ===== */
     .cases-grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 48px; max-width: 800px; margin-left: auto; margin-right: auto; }
 
@@ -724,20 +941,20 @@
     <div class="top-banner">
         <div class="banner-track">
             <div class="banner-content">
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
             </div>
             <div class="banner-content">
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
-                <span class="banner-item">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
+                <span class="banner-item">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</span>
             </div>
         </div>
     </div>
@@ -775,21 +992,66 @@
     <section class="hero" id="home">
         <div class="container">
             <div class="fade-up">
+                <!-- Zone A: 헤드라인 -->
+                <p class="hero-eyebrow">월 100만원 마케팅 전략 팀장</p>
                 <h1 class="hero-headline">
-                    광고비는 쓰고 있는데<br>
-                    <span class="accent">맞는 방향인지 모르겠다면</span>
+                    마케팅 방향이 맞는지<br>
+                    <span class="accent">3개월이면 답이 나옵니다</span>
                 </h1>
                 <p class="hero-sub">
-                    월 100만원 마케팅 전략 팀장<br>
-                    마케팅 구조를 다시 짜는 전략 파트너
+                    광고비만 쓰고 성과가 안 나온다면, 구조가 문제입니다.<br>
+                    전략 설계부터 실행 관리까지 — 팀장처럼 함께합니다.
                 </p>
-                <a href="#contact" class="hero-cta">
-                    전략 팀장 미팅 신청하기
-                    <i class="fas fa-arrow-right"></i>
-                </a>
+
+                <!-- Zone B: 퀵 CTA 폼 -->
+                <div class="hero-quick-form-wrap">
+                    <form class="hero-quick-form" id="heroQuickForm">
+                        <input type="text" name="contact_name" placeholder="담당자 성함" required class="hero-input">
+                        <input type="tel" name="phone" placeholder="연락처 (010-0000-0000)" required class="hero-input">
+                        <button type="submit" class="hero-quick-submit hero-form-cta">
+                            무료 상담 신청 <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                    <p class="hero-form-note">
+                        <i class="fas fa-lock"></i>
+                        개인정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.
+                    </p>
+                </div>
+
                 <p class="hero-meta">
                     최소 3개월 <span>·</span> 월 100만원 <span>·</span> 광고비 별도
                 </p>
+
+                <!-- Zone C: 소셜 프루프 -->
+                <div class="hero-social-proof">
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-num">9+</span>
+                            <span class="hero-stat-label">기업 전략 수립</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-num">320%</span>
+                            <span class="hero-stat-label">평균 ROAS 개선</span>
+                        </div>
+                        <div class="hero-stat-divider"></div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-num">52%</span>
+                            <span class="hero-stat-label">CPA 절감</span>
+                        </div>
+                    </div>
+                    <div class="hero-clients">
+                        <span class="hero-clients-label">함께한 클라이언트</span>
+                        <div class="hero-logo-strip">
+                            <img src="images/clients/dr_ean.png" alt="Dr.Ean">
+                            <img src="images/clients/eat_around.png" alt="eat.around">
+                            <img src="images/clients/zero_waste.png" alt="지구별가게">
+                            <img src="images/clients/mehls.png" alt="Mehls">
+                            <img src="images/clients/rentre.png" alt="Rentre">
+                        </div>
+                    </div>
+                </div>
+
                 <div class="hero-scroll-hint">
                     <span>SCROLL</span>
                     <i class="fas fa-chevron-down"></i>
@@ -884,6 +1146,20 @@
             </div>
         </div>
     </section>
+
+    <!-- ===== 미니 희소성 바 ===== -->
+    <div class="mini-scarcity">
+        <div class="container">
+            <div class="mini-scarcity-inner">
+                <span class="mini-scarcity-text">
+                    🔥 마감 임박: <span class="accent">딱 2팀</span> 모집 중 · 3/4(수) 마감
+                </span>
+                <a href="#contact" class="mini-scarcity-cta">
+                    자리 확인하기 <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== 클라이언트 로고 ===== -->
     <section class="section" id="clients">
@@ -1014,6 +1290,17 @@
         </div>
     </section>
 
+    <!-- ===== 중간 CTA ===== -->
+    <div class="mid-cta fade-up">
+        <div class="container">
+            <h3>지금 무료 상담을 신청하세요</h3>
+            <p>30분 미팅으로 현재 마케팅 구조를 진단해드립니다.</p>
+            <a href="#contact" class="mid-cta-link">
+                무료 상담 신청하기 <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
     <!-- ===== 7. 채용 비교 ===== -->
     <section class="section" id="compare" style="padding: 72px 0;">
         <div class="container">
@@ -1140,14 +1427,14 @@
                 <h2 class="section-title">한 회사에 온전히 집중하기 위해</h2>
             </div>
             <div class="scarcity-box fade-up">
-                <p class="big-num">🔥 2/26(목) ~ 3/3(화), 딱 2팀 모집합니다.</p>
+                <p class="big-num">🔥 2/26(목) ~ 3/4(수), 딱 2팀 모집합니다.</p>
                 <p class="scarcity-sub">그래서 늘 자리가 열려 있지 않습니다.</p>
                 <a href="#contact" class="scarcity-cta">전략 팀장 미팅 신청 →</a>
             </div>
         </div>
     </section>
 
-    <!-- ===== 11. 대표 메시지 + 팀 ===== -->
+    <!-- ===== 11. 대표 메시지 + 팀 (주석 처리 — 추후 복원 가능) =====
     <section class="founder-section" id="founder">
         <div class="container">
             <div class="founder-card fade-up">
@@ -1164,8 +1451,6 @@
                     </p>
                 </div>
             </div>
-
-            <!-- 팀원: 김하영 운영 디렉터 -->
             <div class="founder-card fade-up" style="margin-top: 64px;">
                 <div class="founder-photo">
                     <img src="images/team/director_final.jpg" alt="김하영 운영 디렉터">
@@ -1182,6 +1467,7 @@
             </div>
         </div>
     </section>
+    ===== -->
 
     <!-- ===== CTA: 문의 폼 ===== -->
     <section class="cta-section" id="contact">
@@ -1190,6 +1476,17 @@
                 <div class="fade-up">
                     <h2>전략 팀장 미팅 신청</h2>
                     <p class="cta-sub">간단한 정보만 남겨주시면, 먼저 연락드리겠습니다.</p>
+
+                    <div class="form-testimonials">
+                        <div class="form-testimonial">
+                            <q>ROAS가 200%에서 1,300%로 올랐습니다</q>
+                            <cite>— D2C 브랜드 대표</cite>
+                        </div>
+                        <div class="form-testimonial">
+                            <q>데이터 기반으로 의사결정할 수 있는 구조가 생겼습니다</q>
+                            <cite>— 1인 브랜드 대표</cite>
+                        </div>
+                    </div>
                 </div>
 
                 <form class="cta-form fade-up" id="contactForm" action="#" method="post">
@@ -1228,6 +1525,13 @@
             </div>
         </div>
     </section>
+
+    <!-- ===== 플로팅 CTA ===== -->
+    <div class="floating-cta" id="floatingCta">
+        <a href="#contact" class="floating-cta-link">
+            무료 상담 신청 <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
 
     <!-- ===== 푸터 ===== -->
     <footer class="site-footer">
@@ -1343,6 +1647,62 @@
             });
         }
 
+        // ===== 히어로 퀵 폼 제출 =====
+        const heroForm = document.getElementById('heroQuickForm');
+        if (heroForm) {
+            heroForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const btn = heroForm.querySelector('.hero-quick-submit');
+                const originalHTML = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 제출 중...';
+
+                try {
+                    const fd = new FormData(heroForm);
+                    const data = {
+                        company_name: '(퀵 상담)',
+                        contact_name: fd.get('contact_name'),
+                        phone: fd.get('phone'),
+                        email: '',
+                        inquiry_type: '무료 상담 신청 (퀵폼)',
+                        message: '',
+                        privacy_agreed: true,
+                        submitted_at: new Date().toISOString()
+                    };
+                    await StorageBackend.create(data);
+
+                    // GTM 전환 이벤트
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        event: 'form_submit',
+                        form_name: 'hero_quick_consultation',
+                        company_name: data.company_name,
+                        contact_name: data.contact_name,
+                        contact_phone: data.phone
+                    });
+
+                    // 자동 알림 발송 (이메일 없이도 정상 작동)
+                    sendAutoNotifications(data).catch(err =>
+                        console.error('퀵폼 자동 발송 실패:', err)
+                    );
+
+                    // 성공 메시지
+                    heroForm.innerHTML = `
+                        <div style="text-align:center; padding:20px 0;">
+                            <i class="fas fa-check-circle" style="font-size:36px; color:var(--accent); margin-bottom:12px;"></i>
+                            <p style="font-size:16px; font-weight:700; margin-bottom:4px;">신청이 완료되었습니다!</p>
+                            <p style="font-size:14px; color:var(--text-secondary);">빠른 시간 내에 연락드리겠습니다.</p>
+                        </div>
+                    `;
+                } catch (err) {
+                    console.error('퀵폼 제출 실패:', err);
+                    btn.disabled = false;
+                    btn.innerHTML = originalHTML;
+                    alert('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
+                }
+            });
+        }
+
         // ===== GTM 이벤트 추적 =====
         window.dataLayer = window.dataLayer || [];
 
@@ -1364,6 +1724,18 @@
             });
         });
 
+        // 1-b) 히어로 퀵 폼 CTA 클릭 추적
+        const heroSubmitBtn = document.querySelector('.hero-form-cta');
+        if (heroSubmitBtn) {
+            heroSubmitBtn.addEventListener('click', function() {
+                window.dataLayer.push({
+                    event: 'cta_click',
+                    cta_location: 'hero_quick_form',
+                    cta_text: '무료 상담 신청'
+                });
+            });
+        }
+
         // 2) 폼 시작 추적 (첫 필드 포커스 시 1회만)
         let formStarted = false;
         if (form) {
@@ -1381,20 +1753,93 @@
             });
         }
 
+        // 2-b) 히어로 퀵 폼 시작 추적
+        let heroFormStarted = false;
+        let heroFormSubmitted = false;
+        if (heroForm) {
+            heroForm.querySelectorAll('input').forEach(field => {
+                field.addEventListener('focus', function() {
+                    if (!heroFormStarted) {
+                        heroFormStarted = true;
+                        window.dataLayer.push({
+                            event: 'form_start',
+                            form_name: 'hero_quick_consultation',
+                            first_field: this.name
+                        });
+                    }
+                });
+            });
+            heroForm.addEventListener('submit', function() { heroFormSubmitted = true; });
+        }
+
         // 3) 폼 이탈 추적 (폼 시작했지만 제출 안 하고 페이지 떠날 때)
         let formSubmitted = false;
         if (form) {
             form.addEventListener('submit', function() { formSubmitted = true; });
         }
         document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'hidden' && formStarted && !formSubmitted) {
-                navigator.sendBeacon && navigator.sendBeacon('https://www.google-analytics.com/collect', '');
-                window.dataLayer.push({
-                    event: 'form_abandon',
-                    form_name: 'meeting_request'
-                });
+            if (document.visibilityState === 'hidden') {
+                if (formStarted && !formSubmitted) {
+                    navigator.sendBeacon && navigator.sendBeacon('https://www.google-analytics.com/collect', '');
+                    window.dataLayer.push({
+                        event: 'form_abandon',
+                        form_name: 'meeting_request'
+                    });
+                }
+                if (heroFormStarted && !heroFormSubmitted) {
+                    window.dataLayer.push({
+                        event: 'form_abandon',
+                        form_name: 'hero_quick_consultation'
+                    });
+                }
             }
         });
+
+        // ===== 플로팅 CTA (히어로 벗어나면 표시) =====
+        const floatingCta = document.getElementById('floatingCta');
+        const heroSection = document.getElementById('home');
+        if (floatingCta && heroSection) {
+            const floatingObs = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    floatingCta.classList.toggle('visible', !entry.isIntersecting);
+                });
+            }, { threshold: 0 });
+            floatingObs.observe(heroSection);
+
+            // GTM 추적: 플로팅 CTA 클릭
+            const floatingLink = floatingCta.querySelector('a');
+            if (floatingLink) {
+                floatingLink.addEventListener('click', function() {
+                    window.dataLayer.push({
+                        event: 'cta_click',
+                        cta_location: 'floating',
+                        cta_text: '무료 상담 신청'
+                    });
+                });
+            }
+        }
+
+        // ===== GTM 추적: 미니 희소성 + 중간 CTA 클릭 =====
+        const miniScarcityCta = document.querySelector('.mini-scarcity-cta');
+        if (miniScarcityCta) {
+            miniScarcityCta.addEventListener('click', function() {
+                window.dataLayer.push({
+                    event: 'cta_click',
+                    cta_location: 'mini_scarcity',
+                    cta_text: this.textContent.trim()
+                });
+            });
+        }
+        const midCtaLink = document.querySelector('.mid-cta-link');
+        if (midCtaLink) {
+            midCtaLink.addEventListener('click', function() {
+                window.dataLayer.push({
+                    event: 'cta_click',
+                    cta_location: 'mid_page',
+                    cta_text: this.textContent.trim()
+                });
+            });
+        }
 
         console.log('%c🚀 백록마케팅 v2', 'font-size: 20px; font-weight: bold; color: #51B498;');
     });
