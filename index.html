@@ -1003,19 +1003,11 @@
                     전략 설계부터 실행 관리까지 — 팀장처럼 함께합니다.
                 </p>
 
-                <!-- Zone B: 퀵 CTA 폼 -->
+                <!-- Zone B: CTA 버튼 (하단 폼으로 스크롤) -->
                 <div class="hero-quick-form-wrap">
-                    <form class="hero-quick-form" id="heroQuickForm">
-                        <input type="text" name="contact_name" placeholder="담당자 성함" required class="hero-input">
-                        <input type="tel" name="phone" placeholder="연락처 (010-0000-0000)" required class="hero-input">
-                        <button type="submit" class="hero-quick-submit hero-form-cta">
-                            무료 상담 신청 <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </form>
-                    <p class="hero-form-note">
-                        <i class="fas fa-lock"></i>
-                        개인정보는 상담 목적으로만 사용되며 안전하게 보호됩니다.
-                    </p>
+                    <a href="#contact" class="hero-quick-submit hero-form-cta hero-scroll-cta">
+                        무료 상담 신청 <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
 
                 <p class="hero-meta">
@@ -1647,62 +1639,6 @@
             });
         }
 
-        // ===== 히어로 퀵 폼 제출 =====
-        const heroForm = document.getElementById('heroQuickForm');
-        if (heroForm) {
-            heroForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                const btn = heroForm.querySelector('.hero-quick-submit');
-                const originalHTML = btn.innerHTML;
-                btn.disabled = true;
-                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 제출 중...';
-
-                try {
-                    const fd = new FormData(heroForm);
-                    const data = {
-                        company_name: '(퀵 상담)',
-                        contact_name: fd.get('contact_name'),
-                        phone: fd.get('phone'),
-                        email: '',
-                        inquiry_type: '무료 상담 신청 (퀵폼)',
-                        message: '',
-                        privacy_agreed: true,
-                        submitted_at: new Date().toISOString()
-                    };
-                    await StorageBackend.create(data);
-
-                    // GTM 전환 이벤트
-                    window.dataLayer = window.dataLayer || [];
-                    window.dataLayer.push({
-                        event: 'form_submit',
-                        form_name: 'hero_quick_consultation',
-                        company_name: data.company_name,
-                        contact_name: data.contact_name,
-                        contact_phone: data.phone
-                    });
-
-                    // 자동 알림 발송 (이메일 없이도 정상 작동)
-                    sendAutoNotifications(data).catch(err =>
-                        console.error('퀵폼 자동 발송 실패:', err)
-                    );
-
-                    // 성공 메시지
-                    heroForm.innerHTML = `
-                        <div style="text-align:center; padding:20px 0;">
-                            <i class="fas fa-check-circle" style="font-size:36px; color:var(--accent); margin-bottom:12px;"></i>
-                            <p style="font-size:16px; font-weight:700; margin-bottom:4px;">신청이 완료되었습니다!</p>
-                            <p style="font-size:14px; color:var(--text-secondary);">빠른 시간 내에 연락드리겠습니다.</p>
-                        </div>
-                    `;
-                } catch (err) {
-                    console.error('퀵폼 제출 실패:', err);
-                    btn.disabled = false;
-                    btn.innerHTML = originalHTML;
-                    alert('제출에 실패했습니다. 잠시 후 다시 시도해주세요.');
-                }
-            });
-        }
-
         // ===== GTM 이벤트 추적 =====
         window.dataLayer = window.dataLayer || [];
 
@@ -1711,7 +1647,7 @@
             link.addEventListener('click', function() {
                 let location = 'unknown';
                 if (this.classList.contains('nav-cta')) location = 'navigation';
-                else if (this.classList.contains('hero-cta')) location = 'hero';
+                else if (this.classList.contains('hero-scroll-cta')) location = 'hero';
                 else if (this.classList.contains('diagnosis-cta')) location = 'diagnosis';
                 else if (this.classList.contains('scarcity-cta')) location = 'scarcity';
                 else if (this.closest('.mobile-menu')) location = 'mobile_menu';
@@ -1723,18 +1659,6 @@
                 });
             });
         });
-
-        // 1-b) 히어로 퀵 폼 CTA 클릭 추적
-        const heroSubmitBtn = document.querySelector('.hero-form-cta');
-        if (heroSubmitBtn) {
-            heroSubmitBtn.addEventListener('click', function() {
-                window.dataLayer.push({
-                    event: 'cta_click',
-                    cta_location: 'hero_quick_form',
-                    cta_text: '무료 상담 신청'
-                });
-            });
-        }
 
         // 2) 폼 시작 추적 (첫 필드 포커스 시 1회만)
         let formStarted = false;
@@ -1753,25 +1677,6 @@
             });
         }
 
-        // 2-b) 히어로 퀵 폼 시작 추적
-        let heroFormStarted = false;
-        let heroFormSubmitted = false;
-        if (heroForm) {
-            heroForm.querySelectorAll('input').forEach(field => {
-                field.addEventListener('focus', function() {
-                    if (!heroFormStarted) {
-                        heroFormStarted = true;
-                        window.dataLayer.push({
-                            event: 'form_start',
-                            form_name: 'hero_quick_consultation',
-                            first_field: this.name
-                        });
-                    }
-                });
-            });
-            heroForm.addEventListener('submit', function() { heroFormSubmitted = true; });
-        }
-
         // 3) 폼 이탈 추적 (폼 시작했지만 제출 안 하고 페이지 떠날 때)
         let formSubmitted = false;
         if (form) {
@@ -1784,12 +1689,6 @@
                     window.dataLayer.push({
                         event: 'form_abandon',
                         form_name: 'meeting_request'
-                    });
-                }
-                if (heroFormStarted && !heroFormSubmitted) {
-                    window.dataLayer.push({
-                        event: 'form_abandon',
-                        form_name: 'hero_quick_consultation'
                     });
                 }
             }
