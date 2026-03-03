@@ -42,24 +42,24 @@ const NOTIFY_CONFIG = {
 const TEMPLATES = {
     // SMS 멘트 (90바이트 이내 권장, 초과 시 LMS로 전환)
     sms: (name, bookingUrl) =>
-        `[백록마케팅] ${name}님, 미팅 신청 감사합니다.\n\n` +
+        `[백록마케팅] ${name}님, 무료 상담 신청 감사합니다.\n\n` +
         `아래 링크에서 편하신 시간을 선택해주세요.\n` +
         `${bookingUrl}\n\n` +
-        `궁금한 점은 언제든 연락주세요.`,
+        `3개월이면 마케팅 방향이 달라집니다.`,
 
     // 이메일 제목
     emailSubject: (name) =>
-        `[백록마케팅] ${name}님, 전략 팀장 미팅 일정을 선택해주세요`,
+        `[백록마케팅] ${name}님, 마케팅 구조 진단 상담 일정을 선택해주세요`,
 
     // 관리자 알림 이메일 제목
     adminSubject: (name, company) =>
-        `[새 문의] ${company} - ${name}님이 미팅을 신청했습니다`,
+        `[새 상담] ${company} - ${name}님이 무료 상담을 신청했습니다`,
 
     // 관리자 알림 이메일 본문 (HTML)
     adminBody: (name, company, phone, email) => `
         <div style="max-width:600px; margin:0 auto; font-family:'Apple SD Gothic Neo','Pretendard',sans-serif; color:#333; line-height:1.7;">
             <div style="background:#0E1114; padding:32px; border-radius:12px 12px 0 0; text-align:center;">
-                <h1 style="color:#51B498; font-size:20px; margin:0;">새 미팅 신청이 들어왔습니다</h1>
+                <h1 style="color:#51B498; font-size:20px; margin:0;">새 무료 상담 신청이 들어왔습니다</h1>
             </div>
             <div style="padding:32px; background:#f9fafb; border:1px solid #e5e7eb; border-top:none; border-radius:0 0 12px 12px;">
                 <table style="width:100%; border-collapse:collapse; font-size:15px;">
@@ -96,35 +96,35 @@ const TEMPLATES = {
         <div style="max-width:600px; margin:0 auto; font-family:'Apple SD Gothic Neo','Pretendard',sans-serif; color:#333; line-height:1.7;">
             <div style="background:#0E1114; padding:32px; border-radius:12px 12px 0 0; text-align:center;">
                 <h1 style="color:#51B498; font-size:20px; margin:0;">백록마케팅</h1>
-                <p style="color:#A0A8B4; font-size:14px; margin:8px 0 0;">월 100만원 마케팅 전략 팀장</p>
+                <p style="color:#A0A8B4; font-size:14px; margin:8px 0 0;">마케팅 방향이 맞는지, 3개월이면 답이 나옵니다</p>
             </div>
 
             <div style="padding:32px; background:#f9fafb; border:1px solid #e5e7eb; border-top:none; border-radius:0 0 12px 12px;">
                 <p style="font-size:16px; margin-bottom:24px;">
                     안녕하세요, <strong>${name}</strong>님.<br>
-                    <strong>${company}</strong>의 미팅 신청 감사드립니다.
+                    <strong>${company}</strong>의 무료 상담 신청 감사드립니다.
                 </p>
 
                 <p style="font-size:15px; margin-bottom:24px;">
-                    아래 버튼을 클릭하시면 편하신 시간대를 직접 선택하실 수 있습니다.<br>
-                    선택해주신 시간에 맞춰 Google Meet 링크를 보내드리겠습니다.
+                    30분 무료 상담에서 현재 마케팅 구조를 함께 진단해드립니다.<br>
+                    아래 버튼을 클릭하시면 편하신 시간대를 직접 선택하실 수 있습니다.
                 </p>
 
                 <div style="text-align:center; margin:32px 0;">
                     <a href="${bookingUrl}"
                        style="display:inline-block; padding:14px 40px; background:#51B498; color:#fff;
                               text-decoration:none; border-radius:8px; font-weight:700; font-size:16px;">
-                        미팅 일정 선택하기 →
+                        상담 일정 선택하기 →
                     </a>
                 </div>
 
                 <div style="background:#fff; border:1px solid #e5e7eb; border-radius:8px; padding:20px; margin-top:24px;">
-                    <p style="font-size:14px; color:#6B7280; margin:0 0 8px;"><strong>미팅에서 이런 이야기를 나눕니다:</strong></p>
+                    <p style="font-size:14px; color:#6B7280; margin:0 0 8px;"><strong>상담에서 이런 이야기를 나눕니다:</strong></p>
                     <ul style="font-size:14px; color:#6B7280; margin:0; padding-left:20px;">
-                        <li>회사 소개 (업종, 타겟 고객, 주요 상품/서비스)</li>
-                        <li>현재 겪고 있는 마케팅 고민이나 문제</li>
-                        <li>지금까지 시도했던 마케팅 이력 (광고, 채널 등)</li>
-                        <li>백록마케팅에 기대하는 점</li>
+                        <li>현재 마케팅 구조 진단 (광고, 채널, 데이터)</li>
+                        <li>성과가 안 나오는 근본 원인 분석</li>
+                        <li>3개월 전략 설계 방향 제안</li>
+                        <li>백록마케팅 협업 방식 안내</li>
                     </ul>
                 </div>
 
