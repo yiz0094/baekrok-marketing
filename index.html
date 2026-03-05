@@ -18,6 +18,23 @@
       gtag('config', 'G-XTSYLXXCM1');
     </script>
 
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1389853541674879');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1389853541674879&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel Code -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
@@ -1617,6 +1634,12 @@
                         form_name: 'meeting_request',
                         company_name: data.company_name,
                         contact_email: data.email
+                    });
+
+                    // Meta Pixel 전환 이벤트
+                    fbq('track', 'Lead', {
+                        content_name: '무료 상담 신청',
+                        content_category: 'consultation'
                     });
 
                     // 자동 이메일/SMS 발송
