@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://100record.com/sitemap.xml
