@@ -4,8 +4,9 @@
  *
  * 필요한 서비스:
  * 1. Cal.com - 미팅 일정 예약 링크
- * 2. Solapi - SMS 발송
- * 3. EmailJS - 이메일 발송 (클라이언트 사이드, 무료)
+ * 2. Apps Script Web App - SMS 발송 프록시 (Solapi 시크릿을 서버에서 보관)
+ *    배포 가이드: apps-script/README.md
+ * 3. EmailJS - 이메일 발송 (클라이언트 사이드 publicKey만 사용 → 안전)
  */
 
 // ============================================
@@ -20,12 +21,11 @@ const NOTIFY_CONFIG = {
         bookingUrl: 'https://cal.com/이재은-이즈/30min'
     },
 
-    // Solapi SMS 설정
-    solapi: {
-        apiKey: 'REDACTED_OLD_SOLAPI_KEY',
-        apiSecret: 'REDACTED_OLD_SOLAPI_SECRET',
-        senderPhone: '01036556080',
-        apiUrl: 'https://api.solapi.com/messages/v4/send-many'
+    // SMS 프록시 (Apps Script Web App - 시크릿은 서버 측에 보관)
+    // 배포 가이드: apps-script/README.md
+    // 배포 후 받은 /exec URL을 endpoint 값에 붙여넣으세요.
+    smsProxy: {
+        endpoint: 'https://script.google.com/macros/s/AKfycbzbzKwR0RsXm3V7lK-0YC_GecbEQVPlXlVncyxmkX1ll21qsgE6vT1sKeKdIHqNwgH7/exec'
     },
 
     // EmailJS 설정 (무료: 월 200건)
@@ -142,59 +142,42 @@ const TEMPLATES = {
 // ============================================
 
 /**
- * Solapi HMAC-SHA256 인증 헤더 생성
- */
-async function createSolapiAuthHeader() {
-    const cfg = NOTIFY_CONFIG.solapi;
-    const date = new Date().toISOString();
-    const salt = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).substr(2);
-
-    const encoder = new TextEncoder();
-    const key = await crypto.subtle.importKey(
-        'raw', encoder.encode(cfg.apiSecret),
-        { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-    );
-    const signatureBuffer = await crypto.subtle.sign('HMAC', key, encoder.encode(date + salt));
-    const signature = Array.from(new Uint8Array(signatureBuffer))
-        .map(b => b.toString(16).padStart(2, '0')).join('');
-
-    return `HMAC-SHA256 apiKey=${cfg.apiKey}, date=${date}, salt=${salt}, signature=${signature}`;
-}
-
-/**
- * SMS 발송 (Solapi 직접 호출)
+ * SMS 발송 (Apps Script 프록시 → Solapi)
+ *
+ * 시크릿은 Apps Script Script Properties에만 보관되고,
+ * 브라우저는 endpoint URL만 알면 됨.
+ * SMS 본문 자체도 Apps Script가 서버 측에서 조립하므로 변조 불가.
  */
 async function sendSMS(phone, name, bookingUrl) {
-    const cfg = NOTIFY_CONFIG.solapi;
-    if (cfg.apiKey === 'YOUR_SOLAPI_API_KEY') {
-        console.warn('Solapi 미설정 - SMS 발송 건너뜀');
+    const cfg = NOTIFY_CONFIG.smsProxy;
+    if (!cfg.endpoint || cfg.endpoint.indexOf('PASTE_DEPLOYMENT_ID') !== -1) {
+        console.warn('SMS 프록시 미설정 - SMS 발송 건너뜀');
         return null;
     }
 
     const cleanPhone = phone.replace(/[^0-9]/g, '');
-    const text = TEMPLATES.sms(name, bookingUrl);
-    const authHeader = await createSolapiAuthHeader();
 
-    const response = await fetch('https://api.solapi.com/messages/v4/send', {
+    // Content-Type: text/plain → CORS simple request (preflight 없음).
+    // Apps Script doPost는 e.postData.contents를 raw로 받으므로 JSON 파싱은 서버에서 처리.
+    const response = await fetch(cfg.endpoint, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': authHeader
-        },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
-            message: {
-                to: cleanPhone,
-                from: cfg.senderPhone,
-                text: text
-            }
+            phone: cleanPhone,
+            name: name,
+            bookingUrl: bookingUrl
         })
     });
 
     if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.errorMessage || 'SMS 발송 실패');
+        throw new Error('SMS 프록시 HTTP ' + response.status);
     }
-    return response.json();
+
+    const result = await response.json();
+    if (!result.ok) {
+        throw new Error(result.error || 'SMS 발송 실패');
+    }
+    return result;
 }
 
 /**
