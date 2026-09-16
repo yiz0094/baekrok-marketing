@@ -1811,5 +1811,65 @@
         console.log('%c🚀 백록마케팅 v2', 'font-size: 20px; font-weight: bold; color: #51B498;');
     });
     </script>
+<!-- ===== MAINTENANCE OVERLAY START (강연 당일 임시 점검중 안내 - 이 블록 전체를 지우면 원상복구) ===== -->
+<style>
+.maint-overlay {
+position: fixed; inset: 0; z-index: 100000;
+background: rgba(10,16,20,0.28);
+backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+display: flex; align-items: center; justify-content: center;
+padding: 24px;
+}
+.maint-card {
+position: relative;
+width: 100%; max-width: 400px;
+background: rgba(24,28,36,0.92);
+backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+border-radius: 20px;
+padding: 44px 32px 36px;
+text-align: center;
+overflow: hidden;
+box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 50px rgba(81,180,152,0.1);
+}
+.maint-rule {
+position: absolute; top: 0; left: 0; right: 0; height: 3px;
+background: linear-gradient(90deg, #51B498, #3a9178);
+}
+.maint-title {
+font-size: 21px; font-weight: 900; color: #E8ECEF;
+line-height: 1.45; margin-bottom: 14px;
+}
+.maint-sub {
+font-size: 15px; color: #A0A8B4; line-height: 1.6;
+margin-bottom: 30px;
+}
+.maint-contact {
+display: flex; flex-direction: column; gap: 12px; align-items: center;
+}
+.maint-contact-item { display: flex; }
+.maint-contact a {
+display: inline-flex; align-items: center; gap: 8px;
+color: #C7CDD6; text-decoration: none; font-size: 14px;
+transition: color 0.2s;
+}
+.maint-contact a:hover { color: #51B498; }
+.maint-contact a i { color: #51B498; font-size: 13px; width: 14px; text-align: center; }
+@media (max-width: 480px) {
+.maint-card { padding: 36px 24px 28px; }
+.maint-title { font-size: 19px; }
+}
+</style>
+<div class="maint-overlay" id="maintOverlay">
+<div class="maint-card">
+<div class="maint-rule"></div>
+<h2 class="maint-title">사이트를 새로 단장하고 있어요</h2>
+<p class="maint-sub">더 나은 모습으로 곧 돌아올게요.</p>
+<div class="maint-contact">
+<div class="maint-contact-item"><a href="tel:010-3655-6080"><i class="fas fa-phone"></i>010-3655-6080</a></div>
+<div class="maint-contact-item"><a href="mailto:yiz@100record.com"><i class="fas fa-envelope"></i>yiz@100record.com</a></div>
+</div>
+</div>
+</div>
+<!-- ===== MAINTENANCE OVERLAY END ===== -->
 </body>
 </html>
